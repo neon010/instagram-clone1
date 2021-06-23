@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+
+.login-main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  .upper-section{
+    background: #fff;
+    z-index: 10;
+    border: 1px solid #DBDBDB;
+    padding: 1rem;
+    width: 320px;
+    .title-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: -25px;
+      h1{
+        font-family: 'Grand Hotel', cursive;
+        font-size: 2.5rem;
+      }
+    }
+    .login-form{
+      .form-group{
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        input{
+          padding: 0.7rem;
+          width: 240px;
+          border: 1px solid #DBDBDB;
+        }
+        input:focus{
+          border: 1px solid #000;
+        }
+        button{
+          width: 83%;
+          padding: 0.5rem;
+          margin-top: 0.8rem;
+          border-radius: 3px;
+          border: none;
+          background-color: #0095F6;
+          color: #fff;
+        }
+      }
+    }
+    .or-div{
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .left{
+        height: 1px;
+        background: #DBDBDB;
+        width: 90%;
+        margin-right: 5px;
+      }
+      .right{
+        height: 1px;
+        background: #DBDBDB;
+        width: 90%;
+        margin-left: 5px;
+      }
+    }
+    .facebook-login{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15px;
+      button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        background: transparent;
+        color: #385195;
+      }
+    }
+    .forget-password{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    .forget-password-link{
+      color: #00376b;
+      text-decoration: none;
+      font-size: 12px;
+    }
+  }
+  .lower-section{
+    background: #fff;
+    z-index: 10;
+    border: 1px solid #DBDBDB;
+    margin-top: 10px;
+    padding: 1rem;
+    width: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a{
+      color:#0095f6;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+  }
+}
+
+.signup-main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  .upper-section{
+    background: #fff;
+    z-index: 10;
+    border: 1px solid #DBDBDB;
+    padding: 1.6rem;
+    width: 320px;
+    .title-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: -25px;
+      h1{
+        font-family: 'Grand Hotel', cursive;
+        font-size: 2.5rem;
+      }
+    }
+    .signp-agree{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: -25px;
+      text-align: center;
+      h2{
+        color: #A5A5A5;
+        font-size: 20px;
+      }
+    }
+    .facebook-signup{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15px;
+      button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        background:#0095F6;
+        color: #fff;
+        border-radius: 3px;
+        width: 100%;
+      }
+    }
+    .or-div{
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .left{
+        height: 1px;
+        background: #DBDBDB;
+        width: 90%;
+        margin-right: 5px;
+      }
+      .right{
+        height: 1px;
+        background: #DBDBDB;
+        width: 90%;
+        margin-left: 5px;
+      }
+    }
+    .signup-form{
+      margin-right: 17px;
+      input{
+        padding: 0.5rem;
+        width: 240px;
+        border: 1px solid #DBDBDB;
+        width: 100%;
+        margin-top: 5px;
+      }
+      input:focus{
+        border: 1px solid #000;
+      }
+      button{
+        width: 106%;
+        padding: 0.5rem;
+        margin-top: 0.8rem;
+        border-radius: 3px;
+        border: none;
+        background-color: #0095F6;
+        color: #fff;
+      }
+    }
+    .agreements{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      h2{
+        color: #A5A5A5;
+        font-size: 15px;
+      }
+    }
+  }
+  .lower-section{
+    background: #fff;
+    z-index: 10;
+    border: 1px solid #DBDBDB;
+    margin-top: 10px;
+    padding: 1.6rem;
+    width: 320px;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a{
+      color:#0095f6;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+  }
+}
