@@ -1,9 +1,47 @@
-import { useState } from "react";
+
 import {IoLogoFacebook} from "react-icons/io";
+import {useHistory} from "react-router-dom"
+
+import { useState, useEffect } from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {fetchLoginUser} from "../stateManager"
+
 
 export const Login = () => {
     const [text, setText] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const fetchData = async (url = '', data = {}, type = '') => {
+        const res = await fetch(url, {
+            method: type,
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        return res.json();
+    }
+
+    const  handleLocalLogin = async (event) => {
+        event.preventDefault();
+        const data = {text, password}
+        try {
+            await fetchData("/login", data, "POST");
+            dispatch(fetchLoginUser());
+        }catch (err) {
+            setError(err.message)
+        }
+    } 
+
+    const handleFacebookLogin = async (event) => {
+        event.preventDefault();
+        const res = await fetch("/facebook");
+        console.log(res);
+    }
 
     return (
         <main className="login-main">
@@ -12,15 +50,27 @@ export const Login = () => {
                     <h1>Instagram</h1>
                 </div>
                 <div>
-                    <form className="login-form">
+                    <form className="login-form" onSubmit={handleLocalLogin}>
                         <div className="form-group">
                             <label>
-                                <input type="text" value={text} name="text" required placeholder="phone number, username or email"/>
+                                <input type="text" 
+                                name="text" 
+                                required 
+                                placeholder="phone number, username or email"
+                                value={text} 
+                                onChange = {(event) => setText(event.target.value)}
+                                />
                             </label>
                         </div>
                         <div className="form-group">
                             <label>
-                                <input type="password" value={password} required placeholder="phone number, username or email"/>
+                                <input 
+                                type="password" 
+                                required 
+                                placeholder="password"
+                                value={password} 
+                                onChange = {(event) => setPassword(event.target.value)}
+                                />
                             </label>
                         </div>
                         <div className="form-group">
@@ -34,7 +84,7 @@ export const Login = () => {
                     <div className="right"></div>
                 </div>
                 <div className="facebook-login">
-                    <button type="submit">
+                    <button type="submit" onClick={handleFacebookLogin}>
                         <span><IoLogoFacebook size={30} color="385185"/></span>
                         <span style={{marginLeft:"10px"}}>Log in with facebook</span>
                     </button>

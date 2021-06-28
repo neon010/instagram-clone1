@@ -4,26 +4,31 @@ import {BrowserRouter as Router, Switch, Route,Redirect} from "react-router-dom"
 import {Home} from "../screens/Home";
 import {Login} from "../screens/Login";
 import {Signup} from "../screens/Signup";
-import {Profile} from "../screens/Profile";
 
 
-export const renderScreens = (isLogin) => {
+export const renderScreens = (isLogin, loading, error) => {
     return (
-        <Router>
-            <Switch>
-                <Route exact path="/">
-                    {isLogin ?  <Home/>: <Login/>}
-                </Route>
-                <Route exact path="/login">
-                    {isLogin ? <Redirect to="/" /> : <Login/>}
-                </Route>
-                <Route exact path="/signup">
-                    {isLogin ? <Redirect to="/"/>:<Signup/>}
-                </Route>
-                <Route exact path="/:username">
-                    {isLogin ? <Profile/>:<Redirect to="/login"/>}
-                </Route>
-            </Switch>
-        </Router>
+    <Router>
+        <Switch>
+            <Route exact path="/">
+                {loading ? <h1>Loading...</h1> : isLogin ?  <Home/>: <Login/>}
+            </Route>
+            <Route exact path="/login">
+                {loading ? <h1>Loading...</h1> : isLogin ? <Redirect to="/" /> : <Login/>}
+            </Route>
+            <Route exact path="/signup">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Redirect to="/"/>:<Signup/>}
+            </Route>
+            <Route exact path="/:username">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/add-post">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/direct/messages">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+            </Route>
+        </Switch>
+    </Router>
     )
 }
