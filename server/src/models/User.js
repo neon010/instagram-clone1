@@ -27,7 +27,7 @@ const UserSchema = mongoose.Schema({
     },
     profilePic: { 
         type: String, 
-        default: "" 
+        default: "http://res.cloudinary.com/mycloud213/image/upload/v1625303952/til6wp9v2dauyfpyvvko.png"
     },
     following: [
         { 
@@ -41,6 +41,6 @@ const UserSchema = mongoose.Schema({
             ref: 'User' 
         }
     ]
-}, {timeStamps: true});
+}, {timestamps: true});
 
 module.exports = mongoose.model('User', UserSchema);

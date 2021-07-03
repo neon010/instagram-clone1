@@ -19,7 +19,10 @@ export const renderScreens = (isLogin, loading, error) => {
             <Route exact path="/signup">
                 {loading ? <h1>Loading...</h1>: isLogin ? <Redirect to="/"/>:<Signup/>}
             </Route>
-            <Route exact path="/:username">
+            <Route exact path="/profile">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/profile/:id">
                 {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
             </Route>
             <Route exact path="/add-post">

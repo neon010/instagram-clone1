@@ -1,5 +1,6 @@
 import {FETCH_USER_REQUEST,FETCH_USER_SUCCESS, FETCH_USER_ERROR} from "./actionTypes";
-
+import {FETCH_USER_UPDATE_PIC_REQUEST, FETCH_USER_UPDATE_PIC_SUCCESS, FETCH_USER_UPDATE_PIC_ERROR} from "./actionTypes";
+import {FETCH_USER_REMOVE_PIC_REQUEST, FETCH_USER_REMOVE_PIC_SUCCESS, FETCH_USER_REMOVE_PIC_ERROR} from "./actionTypes";
 
 const fetchUserRequest = () =>{
     return {
@@ -34,6 +35,88 @@ export const fetchLoginUser = () =>{
         } catch (error) {
             console.log(error)
             dispatch(fetchUserError(error));
+        }
+    }
+}
+
+const fetchUserUpadteProfilePicRequest = () =>{
+    return {
+        type: FETCH_USER_UPDATE_PIC_REQUEST
+    }
+}
+
+const fetchUserUpadteProfilePicSuccess = (user) =>{
+    return {
+        type: FETCH_USER_UPDATE_PIC_SUCCESS,
+        payload: user
+    }
+}
+
+const fetchUserUpadteProfilePicError = (error) =>{
+    return {
+        type: FETCH_USER_UPDATE_PIC_ERROR,
+        payload: error
+    }
+}
+
+export const updateProfilePic = (data) =>{
+    return async function(dispatch) {
+        try {
+            dispatch(fetchUserUpadteProfilePicRequest());
+            const res = await fetch("/upload-profile-pic", {
+                method: "PATCH",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify(data)
+              });
+            const json = await res.json();
+            console.log(json);
+            if(json.error) throw json.error;
+
+            dispatch(fetchUserUpadteProfilePicSuccess(json.data));
+        } catch (error) {
+            console.log(error)
+            dispatch(fetchUserUpadteProfilePicError(error));
+        }
+    }
+}
+
+const fetchUserRemoveProfilePicRequest = () =>{
+    return {
+        type: FETCH_USER_REMOVE_PIC_REQUEST
+    }
+}
+
+const fetchUserRemoveProfilePicSuccess = (user) =>{
+    return {
+        type: FETCH_USER_REMOVE_PIC_SUCCESS,
+        payload: user
+    }
+}
+
+const fetchUserRemoveProfilePicError = (error) =>{
+    return {
+        type: FETCH_USER_REMOVE_PIC_ERROR,
+        payload: error
+    }
+}
+
+export const fetchUserRemovePic = () =>{
+    return async function(dispatch) {
+        try {
+            dispatch(fetchUserRemoveProfilePicRequest());
+            const res = await fetch("/remove-profile-pic", {
+                method: "PATCH"
+            })
+            const json = await res.json();
+            console.log(json);
+            if(json.error) throw json.error;
+
+            dispatch(fetchUserRemoveProfilePicSuccess(json.data));
+        } catch (error) {
+            console.log(error)
+            dispatch(fetchUserRemoveProfilePicError(error));
         }
     }
 }

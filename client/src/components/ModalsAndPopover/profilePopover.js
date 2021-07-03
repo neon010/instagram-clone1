@@ -30,7 +30,7 @@ export const ProfilePopover = () => {
               overlay={
                 <Popover id={`popover-positioned-bottom`}>
                   <div className="link-container" style={{display: 'flex', flexDirection: 'column'}}>
-                    <Link to="/:username">
+                    <Link to="/profile">
                       <CgProfile size={20} color="#262626"/>
                       <span>Profile</span>
                     </Link>

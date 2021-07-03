@@ -376,3 +376,90 @@
     width: 70%;
   }
 }
+
+.post-container{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-item{
+  border: 1px solid #DBDBDB;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  .top-link-profile{
+    padding: 10px;
+    a{
+      text-decoration: none;
+      padding: 5px;
+      img{
+        border-radius: 50%;
+      }
+    }
+  }
+  .icons-container{
+    margin-top:10px;
+    margin-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    button{
+      border:none;
+      background: transparent;
+
+      margin-right: 5px;
+    }
+  }
+  .likes-container{
+    margin-left: 8px;
+  }
+  .caption-container{
+    margin-left: 8px;
+    display: flex;
+    .postedBy-fullName{
+      font-weight: 600;
+    }
+    .caption{
+      margin-left: 8px;
+    }
+  }
+  .post-comments{
+    margin-left: 8px;
+  }
+  .add-comments{
+    display: flex;
+    border-top: 1px solid #DBDBDB;
+    button{
+      padding: 10px;
+      border: none;
+      background: transparent;
+    }
+    textarea{
+      padding: 10px;
+      width: 100%;
+      border: none;
+    }
+  }
+  .timestamp{
+    margin-left: 8px;
+    font-weight: 600;
+  }
+}
+
+.profile-container{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .profile-info{
+    display: flex;
+  }
+}
+
+#AddImageModal{
+
+}
+
+
