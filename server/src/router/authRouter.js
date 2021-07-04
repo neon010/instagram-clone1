@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/signup", async (req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const {text, fullName, username, password} = req.body;
         if(!fullName && !username && !password) return res.status(400).send({status:"failed", message:"filled all required fields"});
         
@@ -31,9 +31,10 @@ router.post("/signup", async (req, res) => {
                 username,
                 password: await hashedPassword(password)
             })
+            console.log(newUser);
             await newUser.save();
-            const token = await createJwt({newUser});
-            res.status(200).send({status:'success', message:"user signup successfull", token});
+            console.log(newUser);
+            return res.status(200).send({status:'success', message:"user signup successfull", data:newUser});
         }
         if(phone && email === undefined){
             const userExist = await User.findOne({phone});
@@ -46,8 +47,8 @@ router.post("/signup", async (req, res) => {
                 password: await hashedPassword(password)
             });
             await newUser.save();
-            const token = await createJwt({newUser});
-            res.status(200).send({status:'success', message:"User signup successfull", token});
+            // const token = await createJwt({newUser});
+            return res.status(200).send({status:'success', message:"User signup successfull", data:newUser});
         }
     } catch (error) {
         res.status(500).send({status:"failed", message: error.message});

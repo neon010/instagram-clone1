@@ -36,4 +36,14 @@ router.patch("/remove-profile-pic", async (req, res) => {
     }
 })
 
+router.get('/uset-details/:username', async (req, res) => {
+    try {
+        console.log(req.params);
+        const user = await User.findOne(req.params);
+        console.log(user);
+    } catch (error) {
+        res.status(500).send({status:"failed", message: error.message});
+    }
+})
+
 module.exports = router
