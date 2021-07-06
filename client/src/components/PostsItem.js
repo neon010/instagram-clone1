@@ -16,8 +16,11 @@ import {addCommentAction} from "../stateManager";
 
 
 export const PostsItem = ({item}) =>{
-    const userId = useSelector(state => state.AuthResponse.user._id);
-    // const post = useSelector(state => state.PostsResponse.posts);
+    const {userDetails} = useSelector(state => state.AuthResponse);
+    const {user} = userDetails
+    const userId = user._id
+    const loginUserUsername = user.username
+
 
     const dispatch = useDispatch();
 
@@ -25,15 +28,10 @@ export const PostsItem = ({item}) =>{
     const [comment,  setComment] = useState("");
 
 
-    useEffect(() =>{
-        // setIsLiked(item.likes.includes(userId))
-    })
-    console.log(item);
 
     const timeStamp = timeDifference(new Date(), new Date(item.createdAt));
 
     const handleLikeUnlike = () => {
-        console.log("like");
         setIsLiked(!isLiked);
         const data = {userId: userId, isLiked: !isLiked, postID: item._id}
         dispatch(fetchLikeUnlike(data));
@@ -49,9 +47,10 @@ export const PostsItem = ({item}) =>{
         (item.photos.length > 0 || item.videos.length > 0) ? (
             <div className="post-item" key={item._id}>
                 <div className="top-link-profile" style={{display:"flex", justifyContent:"space-between"}}>
-                    <Link to="/profile">
-                        <img src="" alt="profil-pic" />
-                        <span style={{marginLeft:"5px"}}>{item.postedBy.fullName}</span>
+                    <Link style={{display:"flex", alignItems: 'center'}}
+                    to={item.postedBy.username === loginUserUsername ? "/profile" : `/profile/${item.postedBy.username}`}>
+                        <img src={item.postedBy.profilePic} alt="profil-pic" width="40" height="40" style={{objectFit:"cover"}}/>
+                        <span style={{marginLeft:"10px"}}>{item.postedBy.fullName}</span>
                     </Link>
                     <BsThreeDots size={25} style={{padding: '5px'}}/>
                 </div>
@@ -61,7 +60,6 @@ export const PostsItem = ({item}) =>{
                 <div className="icons-container" style={{marginTop:"10px", display: "flex", justifyContent: "space-between"}}>
                     <div>
                         <button type="button" onClick={handleLikeUnlike}>
-                            {/* <span style={{}}></span> */}
                             <BsHeart size={25} style={{display:isLiked ? "none" : "block"}}/>
                             <FcLike size={30} style={{display:isLiked ? "block" : "none"}}/>
                         </button>
@@ -108,9 +106,6 @@ export const PostsItem = ({item}) =>{
                     onChange={(event) => setComment(event.target.value)}
                     />
                     <button onClick={handleComment}>post</button>
-                </div>
-                <div className="post-timestamps">
-
                 </div>
             </div>
         ): null

@@ -25,6 +25,15 @@ export const renderScreens = (isLogin, loading, error) => {
             <Route exact path="/profile/:id">
                 {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
             </Route>
+            <Route exact path="/profile/:id/">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/profile/:id/likes">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/profile/:id/saved">
+                {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+            </Route>
             <Route exact path="/add-post">
                 {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
             </Route>

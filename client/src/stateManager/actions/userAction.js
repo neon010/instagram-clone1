@@ -1,6 +1,8 @@
 import {FETCH_USER_REQUEST,FETCH_USER_SUCCESS, FETCH_USER_ERROR} from "./actionTypes";
 import {FETCH_USER_UPDATE_PIC_REQUEST, FETCH_USER_UPDATE_PIC_SUCCESS, FETCH_USER_UPDATE_PIC_ERROR} from "./actionTypes";
 import {FETCH_USER_REMOVE_PIC_REQUEST, FETCH_USER_REMOVE_PIC_SUCCESS, FETCH_USER_REMOVE_PIC_ERROR} from "./actionTypes";
+import {FETCH_USER_REFRESH_REQUEST, FETCH_USER_REFRESH_SUCCESS, FETCH_USER_REFRESH_ERROR} from "./actionTypes";
+
 
 const fetchUserRequest = () =>{
     return {
@@ -28,12 +30,15 @@ export const fetchLoginUser = () =>{
             dispatch(fetchUserRequest());
             const res = await fetch('/current-user');
             const json = await res.json();
-            console.log(json);
-            if(json.error) throw json.error;
-
-            dispatch(fetchUserSuccess(json.data));
+            // console.log(json);
+            // if(json.error) throw json.error;
+            if(json.status === "success"){
+                dispatch(fetchUserSuccess(json.data));
+            }else{
+                throw json.message
+            }
         } catch (error) {
-            console.log(error)
+            console.log("ftch user error: " + error)
             dispatch(fetchUserError(error));
         }
     }
@@ -71,7 +76,7 @@ export const updateProfilePic = (data) =>{
                 body: JSON.stringify(data)
               });
             const json = await res.json();
-            console.log(json);
+            // console.log(json);
             if(json.error) throw json.error;
 
             dispatch(fetchUserUpadteProfilePicSuccess(json.data));
@@ -110,13 +115,54 @@ export const fetchUserRemovePic = () =>{
                 method: "PATCH"
             })
             const json = await res.json();
-            console.log(json);
+            // console.log(json);
             if(json.error) throw json.error;
 
             dispatch(fetchUserRemoveProfilePicSuccess(json.data));
         } catch (error) {
             console.log(error)
             dispatch(fetchUserRemoveProfilePicError(error));
+        }
+    }
+}
+
+const fetchUserRefreshRequest = () =>{
+    return {
+        type: FETCH_USER_REFRESH_REQUEST
+    }
+}
+
+const fetchUserRefreshSuccess = (user) =>{
+    return {
+        type: FETCH_USER_REFRESH_SUCCESS,
+        payload: user
+    }
+}
+
+const fetchUserRefreshError = (error) =>{
+    return {
+        type: FETCH_USER_REFRESH_ERROR,
+        payload: error
+    }
+}
+
+
+export const fetchRefreshUser = () =>{
+    return async function(dispatch) {
+        try {
+            dispatch(fetchUserRefreshRequest());
+            const res = await fetch('/current-user');
+            const json = await res.json();
+            // console.log(json);
+            // if(json.error) throw json.error;
+            if(json.status === "success"){
+                dispatch(fetchUserRefreshSuccess(json.data));
+            }else{
+                throw json.message
+            }
+        } catch (error) {
+            console.log("ftch user error: " + error)
+            dispatch(fetchUserRefreshError(error));
         }
     }
 }

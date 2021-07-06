@@ -1,3 +1,4 @@
+import {useState} from "react";
 import {NavLink} from "react-router-dom";
 import {AiFillHome} from "react-icons/ai";
 import {RiTelegramLine} from "react-icons/ri";
@@ -6,10 +7,20 @@ import {useSelector} from "react-redux";
 
 
 import { ProfilePopover } from "./ModalsAndPopover/profilePopover";
+import {ShowUserModal} from "./ModalsAndPopover/ShowUserModal";
 
 export const  Navbar = () => {
+    const [keywords, setKeywords] = useState("")
+    const [showModal, setShowModal] = useState(false);
+
     const AuthResponse = useSelector(state => state.AuthResponse);
     const {user} = AuthResponse;
+
+    const handleshowUserModal = (event) => {
+        setKeywords(event.target.value)
+        setShowModal(true);
+    }
+
 
     return (
     <nav className="navbar">
@@ -17,7 +28,12 @@ export const  Navbar = () => {
             <NavLink to="/">Instagram</NavLink>
         </div>
         <div className="search-container">
-            <input type="text" placeholder="&#xF002; Search" style={{fontFamily:'Arial, FontAwesome'}}/>
+            <input 
+            type="text" 
+            placeholder="&#xF002; Search" 
+            style={{fontFamily:'Arial, FontAwesome'}}
+            onChange={handleshowUserModal}
+            />
         </div>
         <div className="right-link-container">
             <NavLink to="/" ><AiFillHome size={28}/></NavLink>
@@ -25,6 +41,7 @@ export const  Navbar = () => {
             <NavLink to="/direct/messages"><RiTelegramLine size={33}/></NavLink>
             <ProfilePopover/>
         </div>
+        <ShowUserModal showModal={showModal} setShowModal={setShowModal} keywords={keywords}/>
     </nav>
     )
 }

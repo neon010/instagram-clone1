@@ -6,16 +6,14 @@ import {fetchPosts} from "../stateManager"
 
 export const Posts = () =>{
     const dispatch = useDispatch();
-    // const [posts, setPosts] = useState([])
+
 
     useEffect(() =>{
         dispatch(fetchPosts());
-        // setPosts(useSelector(state => state.PostsResponse.posts))
+
     }, [])
 
-    // console.log(posts);
     const posts = useSelector(state => state.PostsResponse.posts)
-
 
     return (
         <div className="post-container">

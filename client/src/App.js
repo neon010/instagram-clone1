@@ -11,12 +11,8 @@ function App() {
   const dispatch = useDispatch();
   const AuthResponse = useSelector(state => state.AuthResponse)
 
-  const {loading, user, isLogin, error} = AuthResponse;
-
-  console.log('loading: '+ loading);
-  console.log(user);
-  console.log('isLogin: '+ isLogin);
-  console.log('error: '+ error)
+  const {loading, isLogin, error} = AuthResponse;
+  
 
   useEffect(()=>{
     dispatch(fetchLoginUser());

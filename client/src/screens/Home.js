@@ -27,6 +27,12 @@ export const Home = () => {
                 return <Profile/>
             case `/profile/:id` :
                 return <UserProfile/>
+            case `/profile/:id/` :
+                return <UserProfile/>
+            case `/profile/:id/likes` :
+                return <UserProfile/>
+            case `/profile/:id/saved` :
+                return <UserProfile/>
             case "/direct/messages":
                 return <Message/>
             default:

@@ -1,16 +1,41 @@
-import {useState, useEffect} from "react";
-import  {useSelector, useDispatch} from "react-redux";
+import {useState} from "react";
+import  {useSelector} from "react-redux";
 import { AddImageModal } from "./ModalsAndPopover/AddImageModal";
+import {useRouteMatch,NavLink} from "react-router-dom";
+import {UserPost} from "../components/UserPost";
+import {UserLikes} from "../components/UserLikes";
+import {UserSaved} from "../components/UserSaved";
+import {BiGrid} from "react-icons/bi";
+import {BsHeart} from "react-icons/bs";
+import {BiSave} from "react-icons/bi";
 
 export const Profile = () =>{
-    const profile = useSelector(state => state.AuthResponse.user);
+    const {userDetails} = useSelector(state => state.AuthResponse);
+
+
+    const profile = userDetails.user
+
+    const userPost = userDetails.userPost
+    const likedPost = userDetails.likedPost
+    console.log(userPost);
+
+    let { path, url } = useRouteMatch();
 
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() =>{
-        console.log("profile");
-    }, [profile])
 
+
+    function render(path) {
+        switch(path){
+            case `/profile/:id/`:
+                return <UserPost post={userPost}/>
+            case `/profile/:id/likes`:
+                return <UserLikes post={likedPost}/>
+            case `/profile/:id/saved`:
+                return <UserSaved post={[]}/>
+            default: return <UserPost post={userPost}/>;
+        }
+    }
 
     const handleClose = () => setShowModal(false);
 
@@ -24,6 +49,7 @@ export const Profile = () =>{
                     src={profile.profilePic} 
                     alt="profile-image" 
                     onClick={()=> setShowModal(true)}
+                    style={{objectFit:"cover"}}
                     />
                     <AddImageModal showModal={showModal} handleClose={handleClose} setShowModal={setShowModal}/>
                 </div>
@@ -34,7 +60,7 @@ export const Profile = () =>{
                     </div>
                     <div className="profile-followers">
                         <button >
-                            <span style={{fontWeight:"bold", marginRight:"5px"}}>0</span>
+                            <span style={{fontWeight:"bold", marginRight:"5px"}}>{userPost.length}</span>
                             <span style={{color:"#898989"}}>posts</span>
                         </button>
                         <button>
@@ -50,7 +76,14 @@ export const Profile = () =>{
                 </div>
             </div>
             <div className="profile-item">
-
+                <div className="link-container">
+                        <NavLink to={`/profile/${profile.username}/`}><BiGrid size={25}/> Post</NavLink>
+                        <NavLink to={`/profile/${profile.username}/likes`}><BsHeart size={25}/> Likes</NavLink>
+                        <NavLink to={`/profile/${profile.username}/saved`}><BiSave size={25}/> saved</NavLink>
+                    </div>
+                    <div>
+                        { render(path)}
+                    </div>
             </div>
         </div>
     )

@@ -9,7 +9,11 @@ import {Link, useHistory} from "react-router-dom"
 export const ProfilePopover = () => {
   const history = useHistory();
   const AuthResponse = useSelector(state => state.AuthResponse);
-  const {user} = AuthResponse;
+
+  // console.log(AuthResponse);
+
+  const {userDetails} = AuthResponse;
+  const {user} = userDetails
 
   const handleLogout = async () => {
     console.log("handle click");
@@ -49,7 +53,9 @@ export const ProfilePopover = () => {
                 </Popover>
               }
             >
-              <button><Avatar name={user.fullName} size={33} round={true}/></button>
+              <button>
+                <img src={user.profilePic} alt="profile-image" width="30" height="30" style={{borderRadius:"50%"}}/>
+              </button>
             </OverlayTrigger>
         </div>
   )

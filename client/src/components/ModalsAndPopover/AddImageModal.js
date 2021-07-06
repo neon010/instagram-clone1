@@ -67,6 +67,7 @@ export const AddImageModal = ({handleClose, showModal, setShowModal}) =>{
             style={{padding:"13px", color:"#404040", border:"none",backgroundColor:"transparent", borderBottom:"1px solid #DBDBDB", fontSize:"15px"}}>
               <input 
               type="file" 
+              id="imageInput"
               accept="image/png, image/jpeg"
               onChange={(event) => setFile(event.target.files)}
               placeholder="Change profile photo" style={{backgroundColor:"transparent", border:"none"}}/>
