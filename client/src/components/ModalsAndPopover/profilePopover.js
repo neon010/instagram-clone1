@@ -1,13 +1,11 @@
 import {OverlayTrigger, Popover} from "react-bootstrap";
-import Avatar from 'react-avatar';
 import {CgProfile} from "react-icons/cg"
 import {AiOutlineSetting} from "react-icons/ai";
 import {VscSave} from "react-icons/vsc";
 import {useSelector} from "react-redux";
-import {Link, useHistory} from "react-router-dom"
+import {Link} from "react-router-dom"
 
 export const ProfilePopover = () => {
-  const history = useHistory();
   const AuthResponse = useSelector(state => state.AuthResponse);
 
   // console.log(AuthResponse);
@@ -54,7 +52,7 @@ export const ProfilePopover = () => {
               }
             >
               <button>
-                <img src={user.profilePic} alt="profile-image" width="30" height="30" style={{borderRadius:"50%"}}/>
+                <img src={user.profilePic} alt="profile user" width="30" height="30" style={{borderRadius:"50%"}}/>
               </button>
             </OverlayTrigger>
         </div>

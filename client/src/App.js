@@ -1,7 +1,11 @@
 import './App.scss';
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
+import io from 'socket.io-client'
 import {useSelector, useDispatch} from "react-redux";
-import {fetchLoginUser} from "./stateManager"
+import {fetchLoginUser} from "./stateManager";
+import {fetchSocket} from "./stateManager";
+
+
 
 
 import {renderScreens} from "./utills/renderScreens";
@@ -16,11 +20,18 @@ function App() {
 
   useEffect(()=>{
     dispatch(fetchLoginUser());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const socket = io("http://localhost:3000");
+    dispatch(fetchSocket(socket));
+    return () => socket.close();
+  }, [dispatch]);
 
 
   return (
     <div>
+
       {renderScreens(isLogin, loading, error)}
     </div>
   );

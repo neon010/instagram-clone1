@@ -23,7 +23,7 @@ export const UserProfile = () =>{
     const [isFollowing, setIsFollowing] = useState(profile ? profile.followers.includes(userId) : false);
     const [error, setError] = useState("");
 
-
+    const socket = useSelector(state => state.Socket);
 
 
     useEffect(()=>{
@@ -40,22 +40,6 @@ export const UserProfile = () =>{
             }
         })
      },[id])
-
-
-    // const getProfile = async (id) =>{
-    //     const url = `/user-details/${id}`
-    //     const res = await fetch(url);
-    //     const resJson = await res.json();
-    //     console.log(resJson)
-    //     if(resJson.status === "success"){
-    //         setProfile(resJson.data.user);
-    //         setUserPost(resJson.data.userPost);
-    //         setLikedPost(resJson.data.likedPost);
-    //     }else{
-    //         setError(resJson.message);
-    //     }
-
-    // }
 
 
 
@@ -84,6 +68,9 @@ export const UserProfile = () =>{
                     setProfile(result.data);
                     setIsFollowing(true);
                     dispatch(fetchRefreshUser());
+                    if(socket.emit){
+                        socket.emit('notification received', userId)
+                    }
                 }else{
                     setError(result.message);
                 }
@@ -95,7 +82,7 @@ export const UserProfile = () =>{
             {profile && userPost && !error && <div className="profile-container" id="profile-container">
             <div className="profile-info">
                 <div className="profile-image">
-                    <img src={profile.profilePic} alt="profile-image" />
+                    <img src={profile.profilePic} alt="profile" />
                 </div>
                 <div className="profile-user-info">
                     <div className="profile-username">

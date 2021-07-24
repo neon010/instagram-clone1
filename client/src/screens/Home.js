@@ -1,9 +1,10 @@
-import {useSelector, useDispatch} from "react-redux";
+// import {useSelector, useDispatch} from "react-redux";
 import { Navbar } from "../components/Navbar";
 import {Profile} from "../components/Profile";
-import {Message} from "../components/Message";
-import {useLocation, Redirect, useRouteMatch} from "react-router-dom"
+import {Inbox} from "../components/Inbox";
+import {useRouteMatch} from "react-router-dom"
 import { Posts } from "../components/Posts";
+import { PostModal } from "../components/ModalsAndPopover/PostModal";
 import {AddPost} from "../components/AddPost";
 import {UserProfile} from "../components/UserProfile";
 
@@ -11,16 +12,15 @@ import {UserProfile} from "../components/UserProfile";
 
 
 export const Home = () => {
-    const location = useLocation();
 
-    let { path, url } = useRouteMatch();
+    let { path} = useRouteMatch();
 
-    console.log(path, url);
-
-    function renderComponent(path, url){
+    function renderComponent(path){
         switch(path){
             case "/" :
                 return <Posts/>
+            case "/post/:id" :
+                return <PostModal/>
             case "/add-post" :
                 return <AddPost/>
             case "/profile":
@@ -34,7 +34,9 @@ export const Home = () => {
             case `/profile/:id/saved` :
                 return <UserProfile/>
             case "/direct/messages":
-                return <Message/>
+                return <Inbox/>
+            case "/direct/messages/:id":
+                return <Inbox/>
             default:
                 return <h1>Page not found</h1>;
         }

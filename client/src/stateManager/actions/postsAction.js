@@ -29,7 +29,7 @@ export const fetchPosts = () =>{
             fetchPostsRequest();
             const res = await fetch('/get-post');
             const json = await res.json();
-            console.log(json);
+
             if(json.error) throw json.error;
 
             dispatch(fetchPostsSuccess(json.data));
@@ -71,7 +71,7 @@ export const fetchLikeUnlike = (data) =>{
                 body: JSON.stringify(data)
             })
             const json = await res.json();
-            console.log(json);
+
             if(json.error) throw json.error;
             dispatch(fetchLikePostSuccess(json.data));
 
@@ -113,7 +113,7 @@ export const addCommentAction = (data) =>{
                 body: JSON.stringify(data)
             })
             const json = await res.json();
-            console.log(json);
+
             if(json.error) throw json.error;
             dispatch(addCommentsPostSuccess(json.data));
 

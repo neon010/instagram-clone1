@@ -1,4 +1,5 @@
 const express = require('express');
+const http = require('http');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieSession = require('cookie-session');
@@ -25,6 +26,13 @@ mongoose.connect(process.env.MONGO_URI,
 
 
 const app = express();
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+    cors: {
+      origin: "http://localhost:5000",
+      credentials: true
+    }
+});
 
 app.use(cors());
 app.use(express.json());
@@ -41,9 +49,59 @@ app.use(passport.session());
 app.use(require('./router/authRouter'));
 app.use(require('./router/profileRouter'));
 app.use(require('./router/postRouter'));
+app.use(require('./router/chatRoomRouter'));
+app.use(require('./router/messageRouter'));
+app.use(require('./router/notificationRouter'));
+
+
+
+io.on('connection', (socket) => {
+
+    if(socket){
+        socket.on('joinUser', (user)=> {
+            if(user){
+                console.log({"joined user": user._id});
+                socket.join(user._id);
+                socket.emit("connected");
+            }
+        });
+        socket.on("join room", (room) => {
+            socket.join(room);
+        });
+
+        socket.on("typing", room => socket.in(room).emit("typing"));
+
+        socket.on("stop typing", room => socket.in(room).emit("stop typing"));
+        socket.on("notification received", (room )=> {
+            console.log({room});
+            socket.in(room).emit("notification received")
+        });
+
+        // socket.on("", (room) =>{
+        //     console.log({room});
+        //     socket.to(room).emit("recieved notification", "xyz");
+        // })
+
+        socket.on("new message", newMessage => {
+
+            const chat = newMessage.chat;
+    
+            if(!chat.users) return console.log("Chat.users not defined");
+    
+            chat.users.forEach(user => {
+                // console.log(user)
+                
+                if(user._id == newMessage.sender._id) return;
+                socket.in(user._id).emit("message received", newMessage);
+            })
+        });
+
+
+    }
+})
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log('sever is listening on port ' + PORT);
 })

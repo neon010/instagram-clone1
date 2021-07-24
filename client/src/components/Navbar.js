@@ -1,20 +1,38 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {NavLink} from "react-router-dom";
 import {AiFillHome} from "react-icons/ai";
 import {RiTelegramLine} from "react-icons/ri";
 import {BsPlusCircleFill} from "react-icons/bs";
-import {useSelector} from "react-redux";
+
+import {useSelector, useDispatch} from "react-redux";
+import {fetchNotifications} from "../stateManager"
 
 
 import { ProfilePopover } from "./ModalsAndPopover/profilePopover";
 import {ShowUserModal} from "./ModalsAndPopover/ShowUserModal";
+import {Notification} from "./ModalsAndPopover/Notification";
 
 export const  Navbar = () => {
     const [keywords, setKeywords] = useState("")
     const [showModal, setShowModal] = useState(false);
 
-    const AuthResponse = useSelector(state => state.AuthResponse);
-    const {user} = AuthResponse;
+    const socket = useSelector(state => state.Socket);
+
+
+    const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     if(socket.on){
+    //         socket.on('recieved notification', (data) =>{
+    //             console.log(data);
+    //     })
+    // }
+    // },[socket]);
+
+
+      useEffect(() => {
+        dispatch(fetchNotifications());
+      }, [dispatch]);
 
     const handleshowUserModal = (event) => {
         setKeywords(event.target.value)
@@ -39,6 +57,7 @@ export const  Navbar = () => {
             <NavLink to="/" ><AiFillHome size={28}/></NavLink>
             <NavLink to="/add-post"><BsPlusCircleFill size={28}/></NavLink>
             <NavLink to="/direct/messages"><RiTelegramLine size={33}/></NavLink>
+            <Notification />
             <ProfilePopover/>
         </div>
         <ShowUserModal showModal={showModal} setShowModal={setShowModal} keywords={keywords}/>

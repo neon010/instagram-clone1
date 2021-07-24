@@ -20,7 +20,7 @@ const customStyles = {
       boxShadow: '2px -4px 5px 0px rgba(0,0,0,0.75)'
 
     },
-  };
+};
 
 export  const ShowUserModal = ({showModal, setShowModal, keywords}) =>{
 
@@ -53,7 +53,7 @@ export  const ShowUserModal = ({showModal, setShowModal, keywords}) =>{
         console.log(`The last navigation action was ${action}`)
         setShowModal(false);
   })
-   },[history]) 
+   },[history, setShowModal]) 
 
     return (
         <Modal
@@ -70,11 +70,11 @@ export  const ShowUserModal = ({showModal, setShowModal, keywords}) =>{
                 {users ? (
                     <ul style={{listStyle:"none"}}>
                         {users.map(user => 
-                        <li style={{marginBottom: "10px"}}>
+                        <li style={{marginBottom: "10px"}} key={Math.random()*10000000000}>
                             <Link 
                             to={user.username === loggedInUser.username ? `/profile/`: `/profile/${user.username}`} 
                             style = {{display: 'flex', alignItems: 'center'}}>
-                                <img src={user.profilePic} alt="profile-image" width="50" height="50" style={{borderRadius:"50%", marginRight:"10px"}}/>
+                                <img src={user.profilePic} alt="profile" width="50" height="50" style={{borderRadius:"50%", marginRight:"10px"}}/>
                                 {user.fullName}
                             </Link>
                         </li>)}

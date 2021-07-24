@@ -1,9 +1,9 @@
 
 import {IoLogoFacebook} from "react-icons/io";
-import {useHistory} from "react-router-dom"
 
-import { useState, useEffect } from "react";
-import {useSelector, useDispatch} from "react-redux";
+
+import { useState} from "react";
+import {useDispatch} from "react-redux";
 import {fetchLoginUser} from "../stateManager"
 
 
@@ -12,7 +12,6 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const history = useHistory();
     const dispatch = useDispatch();
 
     const fetchData = async (url = '', data = {}, type = '') => {
@@ -42,7 +41,7 @@ export const Login = () => {
         const res = await fetch("/facebook");
         console.log(res);
     }
-
+    console.log(error);
     return (
         <main className="login-main">
             <section className="upper-section">

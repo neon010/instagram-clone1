@@ -1,4 +1,4 @@
-import {useState,useEffect} from "react";
+import {useState} from "react";
 import {BsThreeDots} from "react-icons/bs";
 import {FcLike} from "react-icons/fc";
 import {BsHeart} from "react-icons/bs";
@@ -8,6 +8,7 @@ import {BiSave} from "react-icons/bi";
 import {Link} from "react-router-dom";
 import {RenderCarousel} from "./RenderCarousel";
 import {timeDifference} from "../utills/timeDifference";
+
 
 import {useSelector, useDispatch} from "react-redux";
 import {fetchLikeUnlike} from "../stateManager";
@@ -27,20 +28,36 @@ export const PostsItem = ({item}) =>{
     const [isLiked, setIsLiked] = useState(item.likes.includes(userId));
     const [comment,  setComment] = useState("");
 
-
+    const socket = useSelector(state => state.Socket);
 
     const timeStamp = timeDifference(new Date(), new Date(item.createdAt));
+
+
 
     const handleLikeUnlike = () => {
         setIsLiked(!isLiked);
         const data = {userId: userId, isLiked: !isLiked, postID: item._id}
         dispatch(fetchLikeUnlike(data));
+        console.log({postedByID:item.postedBy._id})
+
+        if(isLiked === false) {
+            if(socket.emit){
+                socket.emit('notification received', item.postedBy._id)
+            }
+        }
     }
 
+
+
     const handleComment = () => {
-        console.log(comment);
+
         const data = {userId: userId, comment, postID: item._id}
-        dispatch(addCommentAction(data))
+        dispatch(addCommentAction(data));
+
+        if(socket.emit){
+            socket.emit('notification received', item.postedBy._id)
+        }
+
     }
 
     return (
@@ -63,9 +80,9 @@ export const PostsItem = ({item}) =>{
                             <BsHeart size={25} style={{display:isLiked ? "none" : "block"}}/>
                             <FcLike size={30} style={{display:isLiked ? "block" : "none"}}/>
                         </button>
-                        <button type="button">
+                        <Link to={`/post/${item._id}`}>
                             <FaRegComment size={25}/>
-                        </button>
+                        </Link>
                         <button type="button">
                             <FaTelegramPlane size={25}/>
                         </button>
@@ -85,11 +102,11 @@ export const PostsItem = ({item}) =>{
                 </div>
                 <div className="timestamp">{timeStamp}</div>
                 <div className="post-comments">
-                    <ul>
+                    <ul style={{listStyle:"none"}}>
                         {item.comments.map(comment => 
-                        <li>
-                            <span className="">
-                                <img src={comment.postedBy.profilePic} alt="profile"/>
+                        <li key={Math.random()*10000000000}>
+                            <span className="" style={{display: 'flex'}}>
+                                <img src={comment.postedBy.profilePic} alt="profile" width="40" height="40" style={{borderRadius:"50%"}}/>
                                 <p>{comment.postedBy.fullName}</p>
                             </span>
                             <p>{comment.text}</p>

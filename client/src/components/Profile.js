@@ -19,7 +19,7 @@ export const Profile = () =>{
     const likedPost = userDetails.likedPost
     console.log(userPost);
 
-    let { path, url } = useRouteMatch();
+    let { path } = useRouteMatch();
 
     const [showModal, setShowModal] = useState(false);
 
@@ -47,7 +47,7 @@ export const Profile = () =>{
                 <div className="profile-image">
                     <img 
                     src={profile.profilePic} 
-                    alt="profile-image" 
+                    alt="profile" 
                     onClick={()=> setShowModal(true)}
                     style={{objectFit:"cover"}}
                     />

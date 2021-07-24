@@ -1,6 +1,7 @@
 const express = require('express');
 const isLoggedIn = require("../middlewares/isLoggedIn");
 const Post = require("../models/Post");
+const Notification = require("../models/Notification");
 
 const router = express.Router();
 
@@ -40,7 +41,17 @@ router.post('/make-post', isLoggedIn, async (req, res) => {
 
 router.get('/get-post',isLoggedIn, async (req, res) => {
     try {
-        const post = await Post.find({}).populate("postedBy");
+        const post = await Post.find({}).populate("postedBy comments.postedBy");
+        res.status(200).send({status:"success", data: post})
+    } catch (error) {
+        res.status(500).send({status:"failed", message: error.message})
+    }
+})
+
+router.get('/get-post/:id',isLoggedIn, async (req, res) => {
+    try {
+        console.log({_id:req.params.id});
+        const post = await Post.findOne({_id: req.params.id}).populate("postedBy");
         res.status(200).send({status:"success", data: post})
     } catch (error) {
         res.status(500).send({status:"failed", message: error.message})
@@ -50,12 +61,13 @@ router.get('/get-post',isLoggedIn, async (req, res) => {
 
 router.post('/like-unlike-post', isLoggedIn, async (req, res)=>{
     try {
-        console.log(req.body);
+
         const {userId, isLiked, postID} = req.body;
         const post = await Post.findOne({_id:postID}).populate("postedBy");
         const option = isLiked ? "$push":""
         if(isLiked){
             post.likes.push(userId);
+            await Notification.insertNotification(post.postedBy._id, req.user, "postLike", post._id);
         }else{
             post.likes.pop();
         }
@@ -69,7 +81,6 @@ router.post('/like-unlike-post', isLoggedIn, async (req, res)=>{
 
 router.post('/add-comments', isLoggedIn, async (req, res)=>{
     try {
-        console.log(req.body);
         const {userId, comment, postID} = req.body;
         const commentObj = {
             text:comment,
@@ -87,6 +98,7 @@ router.post('/add-comments', isLoggedIn, async (req, res)=>{
         // await post.comments.push({text: comment, postedBy: userId, date: Date.now()});
         // await post.save();
         console.log(post);
+        await Notification.insertNotification(post.postedBy._id, req.user, "postComment", post._id);
         res.status(200).send({status:"success", data:post})
 
     } catch (error) {
