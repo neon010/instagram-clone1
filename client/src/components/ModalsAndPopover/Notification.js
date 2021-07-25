@@ -5,26 +5,52 @@ import {useHistory} from "react-router-dom"
 import {timeDifference} from "../../utills/timeDifference"
 import {fetchNotificationsOpen} from "../../stateManager";
 import {Link} from "react-router-dom";
+import {useRef, useEffect, useState} from "react"
 
 export const Notification = () => {
+  const [showPopover, setShowPopover] = useState(false);
   const notifications = useSelector(state => state.NotificationResponse.notifications);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const myElem = useRef(null);
 
   const handleIsOpen = (event) => {
     dispatch(fetchNotificationsOpen(event.currentTarget.dataset.notificationid));
     history.push(`/post/${event.currentTarget.dataset.entityid}`)
   }
 
+  // useEffect(() => {
+  //         function handleClickOutside(event) {
+  //             if (myElem.current) {
+  //                 setShowPopover(false);
+  //             }
+  //         }
+  //         // Bind the event listener
+  //         document.addEventListener("mousedown", handleClickOutside);
+  //         return () => {
+  //             // Unbind the event listener on clean up
+  //             document.removeEventListener("mousedown", handleClickOutside);
+  //         };
+  // }, [myElem]);
+
+  useEffect(() => {
+    return history.listen((location, action) => {
+        console.log(`The current URL is ${location.pathname}${location.search}${location.hash}`)
+        console.log(`The last navigation action was ${action}`)
+        setShowPopover(false);
+  })
+   },[history, setShowPopover]) 
+
+
 
   return (
-        <div>
+        <div ref={myElem}>
             <OverlayTrigger
               trigger="click"
               key={'bottom'}
-              // show={false}
+              show={showPopover}
               placement={'bottom'}
               overlay={
                 <Popover id={`popover-positioned-bottom`}>
@@ -67,7 +93,7 @@ export const Notification = () => {
                 </Popover>
               }
             >
-              <button>
+              <button onClick={() => setShowPopover(!showPopover)}>
                 <BsBell size={28}/>
               </button>
             </OverlayTrigger>

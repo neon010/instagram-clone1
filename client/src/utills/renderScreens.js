@@ -52,6 +52,12 @@ export const renderScreens = (isLogin, loading, error) => {
                     <Route exact path="/all-notifications">
                         {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
                     </Route>
+                    <Route exact path="/accounts/edit">
+                        {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+                    </Route>
+                    <Route exact path="/accounts/edit/change-password">
+                        {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
+                    </Route>
                 </Switch>
             </Router>
         </>

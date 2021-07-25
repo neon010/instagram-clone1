@@ -7,6 +7,7 @@ import { PostModal } from "../components/ModalsAndPopover/PostModal";
 import {AddPost} from "../components/AddPost";
 import {UserProfile} from "../components/UserProfile";
 import {AllNotification} from "../components/AllNotification";
+import { Settings } from "../components/Settings";
 
 
 
@@ -38,6 +39,10 @@ export const Home = () => {
                 return <Inbox/>
             case "/all-notifications":
                 return <AllNotification/>
+            case "/accounts/edit":
+                return <Settings/>
+            case "/accounts/edit/change-password":
+                return <Settings/>
             default:
                 return <h1>Page not found</h1>;
         }

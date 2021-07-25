@@ -3,12 +3,14 @@ import {CgProfile} from "react-icons/cg"
 import {AiOutlineSetting} from "react-icons/ai";
 import {VscSave} from "react-icons/vsc";
 import {useSelector} from "react-redux";
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import {useState, useEffect, useRef} from "react"
 
 export const ProfilePopover = () => {
   const AuthResponse = useSelector(state => state.AuthResponse);
+  const [showProfilePopover, setShowProfilePopover] = useState(false);
 
-  // console.log(AuthResponse);
+  const myElem = useRef(null);
 
   const {userDetails} = AuthResponse;
   const {user} = userDetails
@@ -23,12 +25,27 @@ export const ProfilePopover = () => {
     }
   }
 
+//   useEffect(() => {
+//     function handleClickOutside(event) {
+//         if (myElem.current && !myElem.current.contains(event.target)) {
+//           setShowProfilePopover(false);
+//         }
+//     }
+//     // Bind the event listener
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => {
+//         // Unbind the event listener on clean up
+//         document.removeEventListener("mousedown", handleClickOutside);
+//     };
+// }, [myElem]);
+
   return (
-        <div>
+        <div ref={myElem}>
             <OverlayTrigger
               trigger="click"
               key={'bottom'}
               placement={'bottom'}
+              show={showProfilePopover}
               overlay={
                 <Popover id={`popover-positioned-bottom`}>
                   <div className="link-container" style={{display: 'flex', flexDirection: 'column'}}>
@@ -40,7 +57,7 @@ export const ProfilePopover = () => {
                       <VscSave size={20} color="#262626"/>
                       <span>Saved</span>
                     </Link>
-                    <Link to="/accounts/settings">
+                    <Link to="/accounts/edit">
                       <AiOutlineSetting size={20} color="#262626"/>
                       <span>Settings</span>
                     </Link>
@@ -51,7 +68,7 @@ export const ProfilePopover = () => {
                 </Popover>
               }
             >
-              <button>
+              <button onClick={() => setShowProfilePopover(!showProfilePopover)}>
                 <img src={user.profilePic} alt="profile user" width="30" height="30" style={{borderRadius:"50%"}}/>
               </button>
             </OverlayTrigger>

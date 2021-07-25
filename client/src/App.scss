@@ -670,6 +670,45 @@
 
 }
 
-
+.settings{
+  margin-top:20px;
+  background-color: #fff;
+  border: 1px solid #DBDBDB;
+  min-width: 900px;
+  min-height: 500px;
+  display:flex;
+  flex-direction: row;
+  .left-container{
+    min-height: 100%;
+    min-width: 35%;
+    display: flex;
+    flex-direction: column;
+    a{
+      text-decoration: none;
+      padding: 15px;
+      margin-bottom: 10px;
+      color: #000;
+    }
+    a.active{
+      border-left: 2px solid black;
+      font-weight: 600;
+    }
+    a:hover{
+      background-color: #FAFAFA;
+      border-left: 2px solid #DBDBDB;
+    }
+    a.active:hover{
+      background-color: #FAFAFA;
+      border-left: 2px solid black;
+    }
+  }
+  .vertical-line{
+    width: 1px;
+    background: #DBDBDB;
+  }
+  .right-container{
+    width: 65%;
+  }
+}
 
 
