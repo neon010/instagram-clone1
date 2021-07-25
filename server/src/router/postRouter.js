@@ -16,13 +16,9 @@ router.post('/make-post', isLoggedIn, async (req, res) => {
                 return item.url
             }).map(item => item.url);
 
-        console.log(photos);
-
         const videos = url.filter(item => {
             if(item.type === "video") return item.url
         }).map(item => item.url);
-
-        console.log(videos)
 
         const newPost = new Post({
             caption,
@@ -41,17 +37,17 @@ router.post('/make-post', isLoggedIn, async (req, res) => {
 
 router.get('/get-post',isLoggedIn, async (req, res) => {
     try {
-        const post = await Post.find({}).populate("postedBy comments.postedBy");
+        const post = await Post.find({}).populate("postedBy comments.postedBy").sort({ createdAt: -1 });
         res.status(200).send({status:"success", data: post})
     } catch (error) {
         res.status(500).send({status:"failed", message: error.message})
     }
 })
 
-router.get('/get-post/:id',isLoggedIn, async (req, res) => {
+router.get('/get-post/:id', isLoggedIn, async (req, res) => {
     try {
         console.log({_id:req.params.id});
-        const post = await Post.findOne({_id: req.params.id}).populate("postedBy");
+        const post = await Post.findOne({_id: req.params.id}).populate("postedBy comments.postedBy");
         res.status(200).send({status:"success", data: post})
     } catch (error) {
         res.status(500).send({status:"failed", message: error.message})

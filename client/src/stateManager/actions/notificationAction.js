@@ -2,7 +2,9 @@ import {FETCH_NOTIFICATION_REQUEST,
     FETCH_NOTIFICATION_SUCCESS,
     FETCH_NOTIFICATION_ERROR, 
     FETCH_NOTIFICATION_OPEN, 
-    FETCH_LATEST_NOTIFICATION_SUCCESS} 
+    FETCH_LATEST_NOTIFICATION_SUCCESS,
+    FETCH_DELETE_ALL_NOTIFICATION_SUCCESS
+} 
     from "./actionTypes";
 
 const fetchNotificationsRequest = () =>{
@@ -86,6 +88,34 @@ export const fetchLatestNotification = () =>{
             if(json.error) throw json.error;
 
             dispatch(fetchLatestNotificationSuccess(json.data));
+        } catch (error) {
+            dispatch(fetchNotificationsError(error));
+        }
+    }
+}
+
+const fetchDeleteAllNotificationSuccess = (notification) => {
+    return {
+        type: FETCH_DELETE_ALL_NOTIFICATION_SUCCESS,
+        payload: notification
+    }
+}
+
+export const fetchDeleteAllNotification = () => {
+    return async function(dispatch){
+        try {
+            fetchNotificationsRequest();
+            const res = await fetch(`/notification/delete-all`, {
+                method: 'DELETE',
+                headers:{ 
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await res.json();
+            console.log(json)
+            if(json.error) throw json.error;
+
+            dispatch(fetchDeleteAllNotificationSuccess(json.data));
         } catch (error) {
             dispatch(fetchNotificationsError(error));
         }

@@ -1,4 +1,3 @@
-// import {useSelector, useDispatch} from "react-redux";
 import { Navbar } from "../components/Navbar";
 import {Profile} from "../components/Profile";
 import {Inbox} from "../components/Inbox";
@@ -7,7 +6,7 @@ import { Posts } from "../components/Posts";
 import { PostModal } from "../components/ModalsAndPopover/PostModal";
 import {AddPost} from "../components/AddPost";
 import {UserProfile} from "../components/UserProfile";
-
+import {AllNotification} from "../components/AllNotification";
 
 
 
@@ -37,6 +36,8 @@ export const Home = () => {
                 return <Inbox/>
             case "/direct/messages/:id":
                 return <Inbox/>
+            case "/all-notifications":
+                return <AllNotification/>
             default:
                 return <h1>Page not found</h1>;
         }

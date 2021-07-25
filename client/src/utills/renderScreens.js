@@ -49,7 +49,7 @@ export const renderScreens = (isLogin, loading, error) => {
                     <Route exact path="/direct/messages/:id">
                         {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
                     </Route>
-                    <Route exact path="/notification">
+                    <Route exact path="/all-notifications">
                         {loading ? <h1>Loading...</h1>: isLogin ? <Home/>:<Redirect to="/login"/>}
                     </Route>
                 </Switch>

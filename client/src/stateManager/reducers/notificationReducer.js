@@ -3,7 +3,8 @@ import {
     FETCH_NOTIFICATION_SUCCESS,
     FETCH_NOTIFICATION_ERROR,
     FETCH_NOTIFICATION_OPEN,
-    FETCH_LATEST_NOTIFICATION_SUCCESS
+    FETCH_LATEST_NOTIFICATION_SUCCESS,
+    FETCH_DELETE_ALL_NOTIFICATION_SUCCESS,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -30,7 +31,12 @@ export const notificationsReducer = (state = initialState, action) =>{
             notifications: state.notifications.map(notification => notification._id === action.payload._id ? action.payload : notification)
         }
         case FETCH_LATEST_NOTIFICATION_SUCCESS: return {
+            ...state,
             notifications: [action.payload,...state.notifications]
+        }
+        case FETCH_DELETE_ALL_NOTIFICATION_SUCCESS: return {
+            ...state,
+            notifications: action.payload
         }
         case FETCH_NOTIFICATION_ERROR: return {
             ...state,
