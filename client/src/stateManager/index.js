@@ -17,3 +17,4 @@ export {getChatId} from "./actions/chatAction"
 
 export {fetchNotifications} from "./actions/notificationAction"
 export {fetchNotificationsOpen} from "./actions/notificationAction"
+export {fetchLatestNotification} from "./actions/notificationAction"

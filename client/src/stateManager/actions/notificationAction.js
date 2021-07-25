@@ -1,4 +1,9 @@
-import {FETCH_NOTIFICATION_REQUEST, FETCH_NOTIFICATION_SUCCESS,FETCH_NOTIFICATION_ERROR, FETCH_NOTIFICATION_OPEN} from "./actionTypes";
+import {FETCH_NOTIFICATION_REQUEST, 
+    FETCH_NOTIFICATION_SUCCESS,
+    FETCH_NOTIFICATION_ERROR, 
+    FETCH_NOTIFICATION_OPEN, 
+    FETCH_LATEST_NOTIFICATION_SUCCESS} 
+    from "./actionTypes";
 
 const fetchNotificationsRequest = () =>{
     return{
@@ -58,6 +63,29 @@ export const fetchNotificationsOpen = (id) =>{
             if(json.error) throw json.error;
 
             dispatch(fetchNotificationsOpenSuccess(json.data));
+        } catch (error) {
+            dispatch(fetchNotificationsError(error));
+        }
+    }
+}
+
+const fetchLatestNotificationSuccess = (notification) => {
+    return {
+        type: FETCH_LATEST_NOTIFICATION_SUCCESS,
+        payload: notification
+    }
+}
+
+export const fetchLatestNotification = () =>{
+    return async function(dispatch){
+        try {
+            fetchNotificationsRequest();
+            const res = await fetch(`/notification/latest`);
+            const json = await res.json();
+            console.log(json)
+            if(json.error) throw json.error;
+
+            dispatch(fetchLatestNotificationSuccess(json.data));
         } catch (error) {
             dispatch(fetchNotificationsError(error));
         }

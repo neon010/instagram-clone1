@@ -14,18 +14,14 @@ router.get("/get-notification", async (req, res) => {
     }
 })
 
-router.get("/notification/latest", async (req, res, next) => {
-    
-    Notification.findOne({ userTo: req.user })
-    .populate("userTo")
-    .populate("userFrom")
-    .sort({ createdAt: -1 })
-    .then(results => res.status(200).send(results))
-    .catch(error => {
-        console.log(error);
-        res.sendStatus(400);
-    })
+router.get("/notification/latest", async (req, res) => {
 
+    try {
+        const notification = await Notification.findOne({ userTo: req.user }).populate("userTo").populate("userFrom").sort({ createdAt: -1 });
+        res.status(200).send({status:"success", data: notification})
+    } catch (error) {
+        res.status(500).send({status:"failed", message: error.message});
+    }
 })
 
 router.put("/notification/:id/markAsOpened", async (req, res) => {

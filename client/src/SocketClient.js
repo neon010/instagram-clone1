@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {fetchLatestNotification} from "./stateManager"
 
 export const SocketClient = () =>{
     const AuthResponse = useSelector(state => state.AuthResponse);
@@ -10,6 +12,8 @@ export const SocketClient = () =>{
     const {userDetails} = AuthResponse;
 
     const loggedInUser = userDetails.user;
+
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -33,8 +37,8 @@ export const SocketClient = () =>{
     useEffect(() => {
         if(socket.on){
             socket.on("notification received", () => {
-                console.log("notification received")
-
+                console.log("notification received");
+                dispatch(fetchLatestNotification());
             })
         }
     },[socket])
