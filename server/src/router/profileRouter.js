@@ -58,6 +58,7 @@ router.get('/user-details/:username', isLoggedIn, async (req, res) => {
 router.post('/search-user', isLoggedIn, async (req, res) => {
     try {
         const {keywords} = req.body;
+        if(keywords === "" || keywords === " ") return;
 
         let userPattern = new RegExp("^"+keywords, "i");
         const user = await User.find({username:{$regex:userPattern}});
@@ -111,7 +112,6 @@ router.patch("/change-password",isLoggedIn,async (req, res)=>{
     try {
         console.log(req.body)
         const {oldPassword, newPassword, confirmPassword} = req.body;
-        // const user = User.findOne({_id:req.user._id});
         const user = req.user
         console.log(user);
         const oldPasswordMatch =await bcrypt.compare(oldPassword, user.password);

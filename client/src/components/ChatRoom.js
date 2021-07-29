@@ -129,11 +129,18 @@ export const ChatRoom = () =>{
 
     return (
         <div>
-            <div style={{borderBottom:"1px solid #DBDBDB"}}>
-                <ul style={{listStyle:"none", display: "flex", padding:"4px"}}>
-                    {chatDetails && chatDetails.users && chatDetails.users.map(user => <li style={{marginRight:"5px"}} key={Math.random()*10000000000}>{user.fullName}</li>)}
-                </ul>
-            </div>
+            <ul style={{listStyle:"none", display: "flex", borderBottom:"1px solid #DBDBDB"}}>
+                {
+                chatDetails && chatDetails.users && chatDetails.users.map(user => {
+                    if(user._id !== loggedInUser._id){
+                        return <li style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}} key={Math.random()*10000000000}>
+                        <img src={user.profilePic} alt="profile" width="45" height="45" style={{borderRadius:"50%"}}/>
+                        <span style={{marginLeft:"5px"}}>{user.fullName}</span>
+                    </li>
+                    }
+                })
+                }
+            </ul>
             <div className="chatContainer">
                 <div >
                     <ul className="chatMessages">

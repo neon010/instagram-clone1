@@ -9,16 +9,15 @@ Modal.setAppElement('#root');
 
 const customStyles = {
     content: {
-      top: '28%',
+      top: '30%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      padding: '0px',
+      padding: '10px',
       zIndex: 100,
       boxShadow: '2px -4px 5px 0px rgba(0,0,0,0.75)'
-
     },
 };
 
@@ -26,8 +25,6 @@ export  const ShowUserModal = ({showModal, setShowModal, keywords}) =>{
 
     const [users, setUsers] = useState([]);
     const loggedInUser = useSelector(state => state.AuthResponse.userDetails.user);
-
-
 
     const handleClose = () =>{
         setShowModal(false);
@@ -57,7 +54,7 @@ export  const ShowUserModal = ({showModal, setShowModal, keywords}) =>{
 
     return (
         <Modal
-        // ariaHideApp = {false}
+        ariaHideApp = {false}
         shouldFocusAfterRender={false}
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={false}
@@ -66,19 +63,27 @@ export  const ShowUserModal = ({showModal, setShowModal, keywords}) =>{
         style={customStyles}
         contentLabel="show user modal"
         >
-            <div style={{minWidth:"250px", minHeight:"200px", padding: "20px"}}>
-                {users ? (
-                    <ul style={{listStyle:"none"}}>
-                        {users.map(user => 
+            <div style={{minWidth:"250px", minHeight:"200px"}}>
+                <ul style={{listStyle:"none", paddingLeft: 0}}>
+                    {
+                        users && (users.length > 0 ? (users.map(user => 
                         <li style={{marginBottom: "10px"}} key={Math.random()*10000000000}>
                             <Link 
                             to={user.username === loggedInUser.username ? `/profile/`: `/profile/${user.username}`} 
-                            style = {{display: 'flex', alignItems: 'center'}}>
-                                <img src={user.profilePic} alt="profile" width="50" height="50" style={{borderRadius:"50%", marginRight:"10px"}}/>
-                                {user.fullName}
+                            style = {{display: 'flex', alignItems: 'center', textDecoration:"none"}}>
+                                <img src={user.profilePic} alt="profile" width="45" height="45" style={{borderRadius:"50%", marginRight:"5px"}}/>
+                                <div style={{marginLeft:"5px", display: 'flex', flexDirection:"column"}}>
+                                    <span style={{color:"#4D4D4D", fontSize:"15px", fontWeight:"bold"}}>{user.username}</span>
+                                    <span style={{color:"#BFBFBF"}}>{user.fullName}</span>
+                                </div>
                             </Link>
-                        </li>)}
-                    </ul>): "No users found"}</div>
+                        </li>
+                        )):
+                        <li>No users found</li>
+                        )
+                    }
+                </ul>
+            </div>
         </Modal>
     )
 }

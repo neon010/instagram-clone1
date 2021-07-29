@@ -1,4 +1,4 @@
-import  {FETCH_INBOX_REQUEST, FETCH_INBOX_SUCCESS ,FETCH_INBOX_ERROR} from "../actions/actionTypes";
+import  {FETCH_INBOX_REQUEST, FETCH_INBOX_SUCCESS ,FETCH_INBOX_ERROR, ADD_INBOX} from "../actions/actionTypes";
 
 
 const intialState ={
@@ -18,6 +18,11 @@ export const inboxReducer = (state = intialState, action) =>{
         case FETCH_INBOX_SUCCESS: return {
             loading: false,
             inbox:action.payload,
+            error:null
+        }
+        case ADD_INBOX: return {
+            loading: false,
+            inbox: [...state.inbox, action.payload],
             error:null
         }
         case FETCH_INBOX_ERROR: return {

@@ -1,13 +1,17 @@
 import Modal from 'react-modal';
 import {useEffect, useState, useRef} from "react";
+import {useHistory} from "react-router-dom"
+import {useDispatch} from "react-redux";
+import {fetchInbox} from "../../stateManager"
 
 import {FaTimes} from "react-icons/fa"
 
 Modal.setAppElement('#root');
 
 const customStyles = {
+    overlay: { backgroundColor: '#000', opacity:0.8},
     content: {
-      top: '45%',
+      top: '50%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
@@ -16,7 +20,6 @@ const customStyles = {
       padding: '0px',
       zIndex: 100,
       boxShadow: '2px -4px 5px 0px rgba(0,0,0,0.75)'
-
     },
 };
 
@@ -26,8 +29,10 @@ export const CreateChatRoom = ({showModal, setShowModal}) => {
 
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState([]);
+    const dispatch = useDispatch();
 
     const myRef = useRef(null);
+    const history = useHistory();
 
     useEffect(() =>{
         fetch("/search-user", {
@@ -55,7 +60,7 @@ export const CreateChatRoom = ({showModal, setShowModal}) => {
         console.log(selectedUser);
         // if(!selectedUser) return console.log("Please select a user");
         const data = {selectedUser}
-        console.log(data);
+
         fetch("/create-chat-room", {
             method:"POST",
             headers:{
@@ -65,7 +70,12 @@ export const CreateChatRoom = ({showModal, setShowModal}) => {
         })
         .then(res => res.json())
         .then(result => {
-            console.log(result);
+            if(result.status === "success"){
+                console.log(result);
+                history.push(`/direct/messages/${result.data._id}`)
+                setShowModal(false);
+                dispatch(fetchInbox());
+            }
         });
     }
     return (
@@ -79,45 +89,40 @@ export const CreateChatRoom = ({showModal, setShowModal}) => {
         contentLabel="create chat room modal"
         >
             <div className="create-chat-room">
-                <div>
+                <div className="upper-container">
                     <span onClick={() => setShowModal(false)}><FaTimes size={25}/></span>
                     <span>New Message</span>
                 </div>
-                <div>
+                <div className="form-container">
                     <form onSubmit={handleCreateChatRoom}>
-                    <div>
-                        <label>
-                            <span>To :</span>
+                        <div className="input-container">
+                            <label>To</label>
                             <input type="text" 
                             value={keywords}
                             onChange={(event) => setKeywords(event.target.value)}
-                            placeholder="Search"/>
-                        </label>
-                    </div>
-                    <div>
-                        {
-                            selectedUser && selectedUser.map( (user, index)=> 
-                            <li key={index} ref={myRef} value={user._id}>
-                                <span>{user.fullName}</span>
-                                <span 
-                                data-id={user._id} 
-                                onClick={(event)=> {
-                                    const userID = (event.currentTarget.dataset.id)
-                                    setSelectedUser(state => {
-                                        console.log(userID)
-                                        console.log(state)
-                                        return state.filter(user => user._id !== userID)
-                                    })
-                                }}><FaTimes size={20}/></span>
-                            </li>)
-                        }
-                    </div>
-                        <div>
+                            placeholder="Search..."/>
+                        </div>
+                        <div className="selectedUser">
+                            {
+                                selectedUser && selectedUser.map( (user, index)=> 
+                                <li key={user._id} ref={myRef} value={user._id}>
+                                    <span>{user.username}</span>
+                                    <span 
+                                    data-id={user._id} 
+                                    onClick={(event)=> {
+                                        const userID = (event.currentTarget.dataset.id)
+                                        setSelectedUser(state => {
+                                            return state.filter(user => user._id !== userID)
+                                        })
+                                    }}><FaTimes size={15} color="red" style={{marginLeft:"5px"}}/></span>
+                                </li>)
+                            }
+                        </div>
+                        <div className="search-results">
                             {users && users.map(user => {
-                                // console.log(user)
-                                return <li style={{display: 'flex'}} key={user._id}>
-                                    <div style={{display: 'flex'}}>
-                                        <img src={user.profilePic} alt="user profile " width="40" height="40" style={{borderRadius:"50%"}}/>
+                                return <li  key={user._id}>
+                                    <div className="user-info">
+                                        <img src={user.profilePic} alt="user profile " width="30" height="30" style={{borderRadius:"50%"}}/>
                                         <p>{user.fullName}</p>
                                     </div>
                                     <div>
@@ -144,8 +149,8 @@ export const CreateChatRoom = ({showModal, setShowModal}) => {
                                 </li>
                             })}
                         </div>
-                        <div>
-                        <button type="submit">Create chat room</button>
+                        <div className="submit-btn">
+                            <button type="submit">Message</button>
                         </div>
                     </form>
                 </div>

@@ -10,7 +10,8 @@ export {fetchPosts} from "./actions/postsAction";
 export {fetchLikeUnlike} from "./actions/postsAction";
 export {addCommentAction} from "./actions/postsAction";
 
-export {fetchInbox} from "./actions/inboxAction"
+export {fetchInbox} from "./actions/inboxAction";
+export  {fetchAddInbox} from "./actions/inboxAction";
 
 export {fetchSocket} from "./actions/socketAction"
 
