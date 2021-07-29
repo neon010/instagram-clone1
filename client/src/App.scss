@@ -406,6 +406,9 @@
       padding: 5px;
       img{
         border-radius: 50%;
+        object-fit: cover;
+        height: 50px;
+        width: 50px;
       }
     }
   }
@@ -435,7 +438,36 @@
     }
   }
   .post-comments{
-    margin-left: 8px;
+    margin: 10px 8px 0 8px;
+    ul{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      li{
+        display: flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom: 5px;
+        div{
+          display: flex;
+          .comments-postedBy{
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-right: 8px;
+            color: #000;
+            opacity: 0.8;
+          }
+          .comments-text{
+            margin-top: 0;
+            margin-bottom: 0;
+            color: #888888;
+          }
+        }
+        .timestamps{
+          font-size: 12px;
+        }
+      }
+    }
   }
   .add-comments{
     display: flex;
@@ -471,9 +503,10 @@
       margin-right: 100px;
       margin-bottom: 30px;
       img{
-        width: 200px;
-        height: 200px;
+        width: 220px;
+        height: 220px;
         border-radius: 50%;
+        object-fit: cover;
       }
       img:hover{
         cursor: pointer;

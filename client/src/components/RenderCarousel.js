@@ -5,12 +5,12 @@ export const RenderCarousel = ({photos, videos}) =>{
 
     const photosItem = photos.map(photo => (
         <div>
-            <img src={photo} alt="post-pic" width="100%" height="600" />
+            <img src={photo} alt="post-pic" width="100%" height="550" style={{objectFit: 'cover'}}/>
         </div>
     ))
 
     const videosItem = videos.map(video => (
-        <video width="100%" height="600" controls>
+        <video width="100%" height="550" controls style={{objectFit: 'cover'}}>
             <source src={video} />
         </video>
     ))

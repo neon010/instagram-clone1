@@ -13,7 +13,7 @@ import { Settings } from "../components/Settings";
 
 export const Home = () => {
 
-    let { path} = useRouteMatch();
+    let {path} = useRouteMatch();
 
     function renderComponent(path){
         switch(path){
@@ -24,6 +24,10 @@ export const Home = () => {
             case "/add-post" :
                 return <AddPost/>
             case "/profile":
+                return <Profile/>
+            case "/profile/likes":
+                return <Profile/>
+            case "/profile/saved":
                 return <Profile/>
             case `/profile/:id` :
                 return <UserProfile/>

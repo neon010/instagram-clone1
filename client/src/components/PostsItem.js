@@ -66,15 +66,18 @@ export const PostsItem = ({item}) =>{
                 <div className="top-link-profile" style={{display:"flex", justifyContent:"space-between"}}>
                     <Link style={{display:"flex", alignItems: 'center'}}
                     to={item.postedBy.username === loginUserUsername ? "/profile" : `/profile/${item.postedBy.username}`}>
-                        <img src={item.postedBy.profilePic} alt="profil-pic" width="40" height="40" style={{objectFit:"cover"}}/>
+                        <img 
+                        src={item.postedBy.profilePic} 
+                        alt="profil-pic" 
+                        />
                         <span style={{marginLeft:"10px"}}>{item.postedBy.fullName}</span>
                     </Link>
                     <BsThreeDots size={25} style={{padding: '5px'}}/>
                 </div>
-                <div style={{width:"600px", height:"760px"}} >
+                <div style={{width:"600px"}} >
                     <RenderCarousel photos={item.photos} videos={item.videos}/>
                 </div>
-                <div className="icons-container" style={{marginTop:"10px", display: "flex", justifyContent: "space-between"}}>
+                <div className="icons-container">
                     <div>
                         <button type="button" onClick={handleLikeUnlike}>
                             <BsHeart size={25} style={{display:isLiked ? "none" : "block"}}/>
@@ -101,17 +104,24 @@ export const PostsItem = ({item}) =>{
                     <span className="caption">"{item.caption}"</span>
                 </div>
                 <div className="timestamp">{timeStamp}</div>
+                <div style={{marginLeft:"8px", marginTop:"10px"}}>
+                    {item.comments.length > 0 && <Link to={`/post/${item._id}`}>View all {item.comments.length} comments</Link>}
+                </div>
                 <div className="post-comments">
-                    <ul style={{listStyle:"none"}}>
-                        {item.comments.map(comment => 
-                        <li key={Math.random()*10000000000}>
-                            <span className="" style={{display: 'flex'}}>
-                                <img src={comment.postedBy.profilePic} alt="profile" width="40" height="40" style={{borderRadius:"50%"}}/>
-                                <p>{comment.postedBy.fullName}</p>
-                            </span>
-                            <p>{comment.text}</p>
-                            <span>{timeDifference(new Date(), new Date(comment.date))}</span>
-                        </li>)}
+                    <ul>
+                        {item.comments.map((comment,index) => {
+                            if(index < 2){
+                                return <li key={Math.random()*10000000000} >
+                                    <div>
+                                        <p className="comments-postedBy">{comment.postedBy.username}</p>
+                                        <p className="comments-text">{comment.text}</p>
+                                    </div>
+                                    <span className="timestamps">{timeDifference(new Date(), new Date(comment.date))}</span>
+                                </li>
+                            }else{
+                                return;
+                            }
+                        })}
                     </ul>
                 </div>
                 <div className="add-comments">

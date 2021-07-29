@@ -5,7 +5,6 @@ import {BiGrid} from "react-icons/bi";
 import {BsHeart} from "react-icons/bs";
 import {BsFillPersonCheckFill} from "react-icons/bs";
 import {UserPost} from "../components/UserPost";
-import {UserLikes} from "../components/UserLikes";
 import {fetchRefreshUser} from "../stateManager";
 
 
@@ -36,7 +35,7 @@ export const UserProfile = () =>{
                 setUserPost(result.data.userPost);
                 setLikedPost(result.data.likedPost);
             }else{
-                setError(result.data.message);
+                setError(result.message);
             }
         })
      },[id])
@@ -48,7 +47,7 @@ export const UserProfile = () =>{
             case `/profile/:id/`:
                 return <UserPost post={userPost}/>
             case `/profile/:id/likes`:
-                return <UserLikes post={likedPost}/>
+                return <UserPost post={likedPost}/>
             default: return <UserPost post={userPost}/>;
         }
     }

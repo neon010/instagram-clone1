@@ -3,8 +3,6 @@ import  {useSelector} from "react-redux";
 import { AddImageModal } from "./ModalsAndPopover/AddImageModal";
 import {useRouteMatch,NavLink} from "react-router-dom";
 import {UserPost} from "../components/UserPost";
-import {UserLikes} from "../components/UserLikes";
-import {UserSaved} from "../components/UserSaved";
 import {BiGrid} from "react-icons/bi";
 import {BsHeart} from "react-icons/bs";
 import {BiSave} from "react-icons/bi";
@@ -27,12 +25,12 @@ export const Profile = () =>{
 
     function render(path) {
         switch(path){
-            case `/profile/:id/`:
+            case `/profile/`:
                 return <UserPost post={userPost}/>
-            case `/profile/:id/likes`:
-                return <UserLikes post={likedPost}/>
-            case `/profile/:id/saved`:
-                return <UserSaved post={[]}/>
+            case `/profile/likes`:
+                return <UserPost post={likedPost}/>
+            case `/profile/saved`:
+                return <UserPost post={[]}/>
             default: return <UserPost post={userPost}/>;
         }
     }
@@ -77,9 +75,9 @@ export const Profile = () =>{
             </div>
             <div className="profile-item">
                 <div className="link-container">
-                        <NavLink to={`/profile/${profile.username}/`}><BiGrid size={25}/> Post</NavLink>
-                        <NavLink to={`/profile/${profile.username}/likes`}><BsHeart size={25}/> Likes</NavLink>
-                        <NavLink to={`/profile/${profile.username}/saved`}><BiSave size={25}/> saved</NavLink>
+                        <NavLink to={`/profile/`}><BiGrid size={25}/> Post</NavLink>
+                        <NavLink to={`/profile/likes`}><BsHeart size={25}/> Likes</NavLink>
+                        <NavLink to={`/profile/saved`}><BiSave size={25}/> saved</NavLink>
                     </div>
                     <div>
                         { render(path)}
