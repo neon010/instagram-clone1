@@ -1,7 +1,7 @@
 import {FETCH_USER_REQUEST,FETCH_USER_SUCCESS, FETCH_USER_ERROR} from "../actions/actionTypes";
 import {FETCH_USER_UPDATE_PIC_REQUEST, FETCH_USER_UPDATE_PIC_SUCCESS, FETCH_USER_UPDATE_PIC_ERROR} from "../actions/actionTypes";
 import {FETCH_USER_REMOVE_PIC_REQUEST, FETCH_USER_REMOVE_PIC_SUCCESS, FETCH_USER_REMOVE_PIC_ERROR} from "../actions/actionTypes";
-import {FETCH_USER_REFRESH_REQUEST, FETCH_USER_REFRESH_SUCCESS, FETCH_USER_REFRESH_ERROR} from "../actions/actionTypes";
+import {FETCH_USER_REFRESH_REQUEST, FETCH_USER_REFRESH_SUCCESS, FETCH_USER_REFRESH_ERROR, UPDATE_USER_PROFILE} from "../actions/actionTypes";
 
 const intialState = {
     isLogin: null,
@@ -71,6 +71,10 @@ export const userReducer = (state = intialState, action) =>{
             ...state,
         }
         case FETCH_USER_REFRESH_SUCCESS: return {
+            ...state,
+            userDetails:action.payload,
+        }
+        case UPDATE_USER_PROFILE: return {
             ...state,
             userDetails:action.payload,
         }

@@ -17,6 +17,19 @@ passport.deserializeUser(async (id,done)=>{
         done(null, user);
 })
 
+// passport.use("local-signup",
+//     new LocalStrategy(
+//     { 
+//     usernameField: 'text',
+//     passwordField : 'password',
+//      },
+//         async (req,text, password, done) => {
+//             console.log(req.body,text, password);
+
+//         }
+//     )
+// )
+
 passport.use(
     new LocalStrategy(
         { usernameField: 'text' },
@@ -38,8 +51,9 @@ passport.use(
         {
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: "/auth/facebook/redirect"
+        callbackURL: "/facebook/redirect"
     }, async (accessToken, refreshToken, profile, cb) => {
+        console.log(profile)
         const email = profile.emails[0].value
         const user = await User.findOne({email});
         if(user) return done(null, user);

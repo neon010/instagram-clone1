@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const passportSetup = require('./utills/passport');
+require('./utills/passport');
 
 require('dotenv').config();
 
@@ -33,6 +33,9 @@ const io = require("socket.io")(server, {
       credentials: true
     }
 });
+
+
+
 
 app.use(cors());
 app.use(express.json());

@@ -1,10 +1,9 @@
-
 import {IoLogoFacebook} from "react-icons/io";
-
-
 import { useState} from "react";
 import {useDispatch} from "react-redux";
 import {fetchLoginUser} from "../stateManager"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Login = () => {
@@ -33,6 +32,7 @@ export const Login = () => {
             dispatch(fetchLoginUser());
         }catch (err) {
             setError(err.message)
+            toast(err.message);
         }
     } 
 
@@ -98,6 +98,7 @@ export const Login = () => {
                     <a href="/signup">Sign up</a>
                 </div>
             </section>
+            <ToastContainer autoClose={3000} />
         </main>
     )
 }

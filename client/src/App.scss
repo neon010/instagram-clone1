@@ -711,4 +711,92 @@
   }
 }
 
+.edit-profile{
+  .top-profile-container{
+    display: flex;
+    margin: 25px 0 20px 0;
+    .image-container{
+      width:25%;
+      display: flex; 
+      justify-content: flex-end;
+      .image-profile-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right:5px;
+      }
+    }
+    .user-details{
+      margin:0 0 0 25px;
+      .change-photo-btn{
+        border:none;
+        background-color:transparent; 
+        margin:0;
+        padding:0; 
+        color:#0095f6;
+        font-weight:bold;
+      }
+    }
+  }
+  .form{
+    .form-group{
+      display: flex;
+      margin-bottom:15px;
+      .label-container{
+        width:25%; 
+        display: flex;
+        justify-content: flex-end !important;
+        align-items: center;
+        label{
+          font-weight: 600;
+        }
+      }
+      .confirm-label-container{
+        width:25%; 
+        label{
+          font-weight: 600;
+        }
+      }
+      .input-container{
+        width:55%; 
+        display: flex;
+        justify-content: flex-start; 
+        margin-left:25px;
+        input[type="text"],[type="email"], [type="password"]{
+          padding:10px; 
+          width:100%;
+          border:1px solid #DBDBDB;
+          border-radius: 5px;
+        }
+        textarea{
+          padding:6px; 
+          width:100%;
+          border:1px solid #DBDBDB;
+          height: 40px;
+          resize: none;
+          border-radius: 5px;
+        }
+        button{
+          padding: 8px 10px;
+          border:none;
+          border-radius: 3px;
+          background-color: #0095F6;
+          color: #fff;
+        }
+        button:disabled{
+          background-color: #B2DFFC;
+          color: #fff;
+        }
+      }
+    }
+    .confirm-password{
+      display: flex;
+      margin-bottom:15px;
+      .label-container{
+        width:25%; 
+        display: flex;
+      }
+    }
+  }
+}
 

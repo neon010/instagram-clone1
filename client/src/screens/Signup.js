@@ -1,11 +1,15 @@
 import { useState } from "react";
 import {IoLogoFacebook} from "react-icons/io";
+import {useHistory} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Signup = () => {
     const [text, setText] = useState("");
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
     const [username, setUserName] = useState("");
+    const history = useHistory();
 
     const fetchData = async (url = '', data = {}) => {
         const res = await fetch(url, {
@@ -22,14 +26,15 @@ export const Signup = () => {
     const handleSignup = async (event) => {
         event.preventDefault();
         
-        console.log(text);
-        console.log(password);
-        console.log(fullName);
-        console.log(username);
-
         const data = {text, fullName, username, password}
-        const res = await fetchData("/signup", data);
-        console.log(res);
+        const result = await fetchData("/signup", data);
+        console.log(result);
+        if(result.status === "success"){
+            history.push("/login");
+        }else{
+            console.log(result.message);
+            toast(result.message);
+        }
     }
 
     return (
@@ -113,6 +118,7 @@ export const Signup = () => {
                     <a href="/login">Log in</a>
                 </div>
             </section>
+            <ToastContainer autoClose={3000} />
         </main>
     )
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require("../models/User");
 const Post = require("../models/Post");
+const bcrypt = require('bcryptjs');
 const Notification = require("../models/Notification");
 
 const isLoggedIn = require("../middlewares/isLoggedIn");
@@ -75,6 +76,51 @@ router.patch("/follow-user", async (req, res) => {
 
         await Notification.insertNotification(userId, req.user, "follow", req.user);
         res.status(200).send({status:"success", data: followerUser})
+    } catch (error) {
+        res.status(500).send({status:"failed", message: error.message});
+    }
+})
+
+router.patch('/update-profile', isLoggedIn, async (req, res) => {
+    try{
+        console.log(req.body)
+        const keys = Object.keys(req.body);
+        let user = req.user
+
+
+        keys.forEach(key => {
+
+            if(req.body[key] !== ""){
+                console.log(user[key], req.body[key])
+                user[key] = req.body[key]
+            }
+        });
+
+        await user.save();
+
+        const userPost = await Post.find({postedBy:req.user._id});
+        const likedPost = await Post.find({likes:{$in:[req.user._id]}})
+        const userDetails = {user, userPost, likedPost};
+        res.status(200).send({status:"success", data: userDetails})
+    }catch(error){
+        res.status(500).send({status:"failed", message: error.message});
+    }
+})
+
+router.patch("/change-password",isLoggedIn,async (req, res)=>{
+    try {
+        console.log(req.body)
+        const {oldPassword, newPassword, confirmPassword} = req.body;
+        // const user = User.findOne({_id:req.user._id});
+        const user = req.user
+        console.log(user);
+        const oldPasswordMatch =await bcrypt.compare(oldPassword, user.password);
+        if(!oldPasswordMatch) return res.status(500).send({status:"failed", message:"password is incorrect"});
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword,salt);
+        user.password = hashedPassword;
+        await user.save();
+        res.status(200).send({status:"success", message: "Password changed"})
     } catch (error) {
         res.status(500).send({status:"failed", message: error.message});
     }

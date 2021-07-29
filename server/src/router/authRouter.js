@@ -11,9 +11,11 @@ const router = express.Router();
 
 router.post("/signup", async (req, res) => {
     try {
-        // console.log(req.body);
+        console.log(req.body);
         const {text, fullName, username, password} = req.body;
-        if(!fullName && !username && !password) return res.status(400).send({status:"failed", message:"filled all required fields"});
+        if(!fullName && !username && !password) return res.status(400).send(
+            {status:"failed", message:"filled all required fields"}
+            );
         
         let email,phone
 
@@ -47,8 +49,8 @@ router.post("/signup", async (req, res) => {
                 password: await hashedPassword(password)
             });
             await newUser.save();
-            // const token = await createJwt({newUser});
-            return res.status(200).send({status:'success', message:"User signup successfull", data:newUser});
+
+            return res.status(200).send({status:'success', message:"User signup successfull"});
         }
     } catch (error) {
         res.status(500).send({status:"failed", message: error.message});
@@ -66,15 +68,18 @@ router.post('/login', passport.authenticate('local'), async (req, res) => {
 
 
 //auth with facebook
-router.get("/facebook", passport.authenticate('facebook',
-    console.log("hello facebook")
-)
-)
+router.get("/facebook", passport.authenticate('facebook'), async (req, res) => {
+    try {
+        res.status(200).send({status:"success", data: req.user});
+    } catch (error) {
+        res.status(500).send({status:"failed", message: error.message})
+    }
+})
 
 //callback route for faceb0ok to redirect to
 router.get("/facebook/redirect", passport.authenticate('facebook', { scope : ['email']}), (req, res)=>{
-    //res.send(req.user);
-    res.redirect("/user/profile");
+    res.send(req.user);
+    // res.redirect("/user/profile");
 });
 
 router.get('/logout', (req, res) => {
@@ -108,9 +113,6 @@ const hashedPassword = async (password) => {
     return hashedPassword;
 }
 
-const createJwt = async (data) => {
-    const token = await jwt.sign(data, process.env.JWT_TOKEN_SECRET);
-    return token;
-}
+
 
 module.exports = router;

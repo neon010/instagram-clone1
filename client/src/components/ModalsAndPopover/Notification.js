@@ -1,4 +1,4 @@
-import {OverlayTrigger, Popover} from "react-bootstrap";
+import {Popover} from 'react-tiny-popover';
 import {BsBell} from "react-icons/bs";
 import {useSelector, useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom"
@@ -21,19 +21,6 @@ export const Notification = () => {
     history.push(`/post/${event.currentTarget.dataset.entityid}`)
   }
 
-  // useEffect(() => {
-  //         function handleClickOutside(event) {
-  //             if (myElem.current) {
-  //                 setShowPopover(false);
-  //             }
-  //         }
-  //         // Bind the event listener
-  //         document.addEventListener("mousedown", handleClickOutside);
-  //         return () => {
-  //             // Unbind the event listener on clean up
-  //             document.removeEventListener("mousedown", handleClickOutside);
-  //         };
-  // }, [myElem]);
 
   useEffect(() => {
     return history.listen((location, action) => {
@@ -47,13 +34,13 @@ export const Notification = () => {
 
   return (
         <div ref={myElem}>
-            <OverlayTrigger
-              trigger="click"
-              key={'bottom'}
-              show={showPopover}
-              placement={'bottom'}
-              overlay={
-                <Popover id={`popover-positioned-bottom`}>
+            <Popover
+              isOpen={showPopover}
+              onClickOutside={() => setShowPopover(false)}
+              positions={['bottom']} // preferred positions by priority
+              padding={5}
+              content={ 
+              <div id={`popover-positioned-bottom`}>
                   <div style={{margin:"5px  0 "}}>
                     <div style={{display:"flex", alignItems:"center", justifyContent:"center", marginTop:"10px", marginBottom:"5px", fontSize:"20px", fontWeight:"bold"}}>Notification</div>
                     <div>
@@ -90,13 +77,13 @@ export const Notification = () => {
                       <Link to="/all-notifications" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>See all notifications</Link>
                     </div>
                   </div>
-                </Popover>
-              }
+              </div>
+            }
             >
               <button onClick={() => setShowPopover(!showPopover)}>
                 <BsBell size={28}/>
               </button>
-            </OverlayTrigger>
+            </Popover>
         </div>
   )
 }

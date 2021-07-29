@@ -2,7 +2,7 @@ import {FETCH_USER_REQUEST,FETCH_USER_SUCCESS, FETCH_USER_ERROR} from "./actionT
 import {FETCH_USER_UPDATE_PIC_REQUEST, FETCH_USER_UPDATE_PIC_SUCCESS, FETCH_USER_UPDATE_PIC_ERROR} from "./actionTypes";
 import {FETCH_USER_REMOVE_PIC_REQUEST, FETCH_USER_REMOVE_PIC_SUCCESS, FETCH_USER_REMOVE_PIC_ERROR} from "./actionTypes";
 import {FETCH_USER_REFRESH_REQUEST, FETCH_USER_REFRESH_SUCCESS, FETCH_USER_REFRESH_ERROR} from "./actionTypes";
-
+import {UPDATE_USER_PROFILE} from "./actionTypes"
 
 const fetchUserRequest = () =>{
     return {
@@ -162,6 +162,40 @@ export const fetchRefreshUser = () =>{
             }
         } catch (error) {
             console.log("ftch user error: " + error)
+            dispatch(fetchUserRefreshError(error));
+        }
+    }
+}
+
+const updateUserProfileSuccess = (user) =>{
+    return {
+        type: UPDATE_USER_PROFILE,
+        payload: user
+    }
+}
+
+
+export const updateUserProfile = (data) =>{
+    return async function(dispatch) {
+        try {
+            dispatch(fetchUserRefreshRequest());
+            const res = await fetch('/update-profile', {
+                method: 'PATCH',
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const json = await res.json();
+            console.log(json);
+            // if(json.error) throw json.error;
+            if(json.status === "success"){
+                dispatch(updateUserProfileSuccess(json.data));
+            }else{
+                throw json.message
+            }
+        } catch (error) {
+            console.log({error})
             dispatch(fetchUserRefreshError(error));
         }
     }
