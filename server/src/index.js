@@ -63,7 +63,6 @@ io.on('connection', (socket) => {
     if(socket){
         socket.on('joinUser', (user)=> {
             if(user){
-                console.log({"joined user": user._id});
                 socket.join(user._id);
                 socket.emit("connected");
             }

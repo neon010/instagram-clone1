@@ -128,8 +128,8 @@ export const ChatRoom = () =>{
 
 
     return (
-        <div>
-            <ul style={{listStyle:"none", display: "flex", borderBottom:"1px solid #DBDBDB"}}>
+        <>
+            <ul className="chatDetails">
                 {
                 chatDetails && chatDetails.users && chatDetails.users.map(user => {
                     if(user._id !== loggedInUser._id){
@@ -142,8 +142,8 @@ export const ChatRoom = () =>{
                 }
             </ul>
             <div className="chatContainer">
-                <div >
-                    <ul className="chatMessages">
+                <div className="chatMessages">
+                    <ul >
                     {
                             chats ? chats.map(chat => 
                                 <li 
@@ -180,6 +180,6 @@ export const ChatRoom = () =>{
                     >send</button>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

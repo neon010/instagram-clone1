@@ -2,6 +2,7 @@ const express = require("express");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 
 const Message = require("../models/Message");
+const ChatRoom = require("../models/ChatRoom");
 const User = require("../models/User");
 
 const router = express.Router();
@@ -21,6 +22,8 @@ router.post("/send-Message", isLoggedIn, async (req, res) => {
             message = await message.populate("sender").execPopulate();
             message = await message.populate("chat").execPopulate();
             message = await User.populate(message, { path: "chat.users" });
+            await ChatRoom.findByIdAndUpdate(req.body.chatId, { latestMessage: message })
+            
         });
         res.status(200).send({status:"success", data:newMessage});
     } catch (error) {

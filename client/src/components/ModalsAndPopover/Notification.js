@@ -60,7 +60,8 @@ export const Notification = () => {
                           color: '#000', 
                           padding:"6px",
                           width: "100%",
-                          backgroundColor: notification.opened ? '#fff' : '#DBDBDB'
+                          backgroundColor: notification.opened ? '#fff' : '#DBDBDB',
+                          cursor:"pointer"
                           }}>
                             <span>
                               <img src={notification.userFrom.profilePic} alt="profile user" width="40" height="40" style={{borderRadius:"50%"}}/>

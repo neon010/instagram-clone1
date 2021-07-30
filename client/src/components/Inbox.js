@@ -4,7 +4,8 @@ import {useSelector, useDispatch} from "react-redux";
 import {Link, useRouteMatch} from "react-router-dom"
 import {fetchInbox} from "../stateManager"
 import { ChatRoom } from "./ChatRoom";
-import {CreateChatRoom} from "./ModalsAndPopover/CreateChatRoom"
+import {CreateChatRoom} from "./ModalsAndPopover/CreateChatRoom";
+import {timeDifference} from "../utills/timeDifference"
 
 export const Inbox = () =>{
     const [showModal, setShowModal] = useState(false);
@@ -27,7 +28,7 @@ export const Inbox = () =>{
 
     const {user} = userDetails;
     const loggedInUser = user
-    console.log(loggedInUser)
+
 
     return (
         <div className="message-container">
@@ -37,20 +38,47 @@ export const Inbox = () =>{
                     <button className="create-chat-button" onClick={createChatRoom}><RiChatNewLine size={25}/></button>
                 </div>
                 <ul className="contact-list">
-                    {(inbox && inbox.length > 0) ? inbox.map((item) =>
-                            <li key={item._id} style={{marginBottom:"10px"}}>
-                                <Link to={`/direct/messages/${item._id}`} style={{display: 'flex', textDecoration:"none"}}>
-                                    {item.users.map(user => {
-                                        if(user._id !== loggedInUser._id){
-                                            return <li>
-                                                        <img src={user.profilePic} alt="profile" width="30" height="30" style={{borderRadius:"50%"}}/>
-                                                        {user.fullName}
-                                                    </li>
+                    {(inbox && inbox.length > 0) ? inbox.map((item) =>{
+                        const {isGroupChat, latestMessage, users} = item;
+                        console.log(latestMessage)
+                        return <li key={item._id}>
+                        <Link to={`/direct/messages/${item._id}`}>
+                            <div className="wrapper">
+                                <div className="image-container">
+                                    {users.map((user, index) => {
+                                        if(index < 3){
+                                            if(user._id !== loggedInUser._id){
+                                                return  <img 
+                                                    src={user.profilePic} 
+                                                    alt="profile" 
+                                                    width="50" height="50" style={{borderRadius:"50%", objectFit:"cover"}}
+                                                    />
+                                            }
                                         }
-                                    }
-                                )}
-                                </Link>
-                            </li>
+                                    })}
+                                </div>
+                                <div className="user-div">
+                                    <div className="user-info">
+                                        {users.map(user => {
+                                            if(user._id !== loggedInUser._id){
+                                                return  <p>{user.username}</p>
+                                            }
+                                        })}
+                                    </div>
+                                    <div  className="latestMessage" style={{display: latestMessage ? "flex": "none"}}>
+                                        <div >
+                                            <span className="sender">{latestMessage && latestMessage.sender.username}</span>
+                                            <span style={{margin:"0 2px 8px 2px", fontWeight:"bold"}}>{latestMessage && "."}</span>
+                                            <span className="msg">{latestMessage && latestMessage.content}</span>
+                                        </div>
+                                        <div className="timestamps">{latestMessage && timeDifference(new Date(), new Date(latestMessage.createdAt)) }</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                        </li>
+
+                    }
                         ): <li ><p>inbox is empty</p></li>
                     } 
                 </ul>
@@ -59,10 +87,8 @@ export const Inbox = () =>{
             <div className="right-container">
                 {path === "/direct/messages/:id" ? 
                 <ChatRoom/> : 
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
-                    <button 
-                    onClick={() => setShowModal(true)}
-                    style={{padding: "8px 10px", color: '#fff', background:"#0095F6", border:"none", borderRadius:"5px"}}>Send Message</button>
+                <div className="send-msg">
+                    <button onClick={() => setShowModal(true)}>Send Message</button>
                 </div>
                 }
             </div>

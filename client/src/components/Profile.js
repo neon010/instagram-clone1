@@ -1,7 +1,7 @@
 import {useState} from "react";
 import  {useSelector} from "react-redux";
 import { AddImageModal } from "./ModalsAndPopover/AddImageModal";
-import {useRouteMatch,NavLink} from "react-router-dom";
+import {useRouteMatch,NavLink, Link} from "react-router-dom";
 import {UserPost} from "../components/UserPost";
 import {BiGrid} from "react-icons/bi";
 import {BsHeart} from "react-icons/bs";
@@ -54,7 +54,7 @@ export const Profile = () =>{
                 <div className="profile-user-info">
                     <div className="profile-username">
                         <h2>{profile.username}</h2>
-                        <button className="">Edit Profile</button>
+                        <Link to={`/accounts/edit`}>Edit Profile</Link>
                     </div>
                     <div className="profile-followers">
                         <button >

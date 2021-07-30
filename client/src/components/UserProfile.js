@@ -96,7 +96,7 @@ export const UserProfile = () =>{
                             <span style={{fontWeight:"bold", marginRight:"5px"}}>{userPost.length}</span>
                             <span style={{color:"#898989"}}>posts</span>
                         </button>
-                        <button>
+                        <button >
                             <span style={{fontWeight:"bold", marginRight:"5px"}}>{profile.followers.length}</span>
                             <span style={{color:"#898989"}}>followers</span>
                         </button>

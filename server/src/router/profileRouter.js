@@ -126,4 +126,12 @@ router.patch("/change-password",isLoggedIn,async (req, res)=>{
     }
 })
 
+router.get("/get-followers-followings", isLoggedIn, async (req, res) =>{
+    try {
+        
+    } catch (error) {
+        res.status(500).send({status:"failed", message: error.message});
+    }
+})
+
 module.exports = router
