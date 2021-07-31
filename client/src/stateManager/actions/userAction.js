@@ -76,7 +76,7 @@ export const updateProfilePic = (data) =>{
                 body: JSON.stringify(data)
               });
             const json = await res.json();
-            // console.log(json);
+            console.log(json);
             if(json.error) throw json.error;
 
             dispatch(fetchUserUpadteProfilePicSuccess(json.data));

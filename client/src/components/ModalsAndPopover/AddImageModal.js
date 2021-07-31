@@ -46,6 +46,7 @@ export const AddImageModal = ({handleClose, showModal, setShowModal}) =>{
       const data = {image: resJson.url}
       dispatch(updateProfilePic(data));
       setShowModal(false);
+      window.location.reload();
     }else{
       console.log(resJson.error.message);
     }
@@ -54,6 +55,7 @@ export const AddImageModal = ({handleClose, showModal, setShowModal}) =>{
     const removeProfilePic = async () =>{
       console.log("removeProfilePic");
         dispatch(fetchUserRemovePic());
+        window.location.reload();
         setShowModal(false);
     }
 

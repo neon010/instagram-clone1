@@ -44,7 +44,6 @@ export const CreateChatRoom = ({showModal, setShowModal}) => {
         })
         .then(res => res.json())
         .then(result => {
-            // console.log(result.data);
             setUsers(result.data)
         });
     }, [keywords]);
@@ -78,6 +77,8 @@ export const CreateChatRoom = ({showModal, setShowModal}) => {
             }
         });
     }
+
+
     return (
         <Modal
         shouldFocusAfterRender={false}

@@ -606,6 +606,14 @@
         h2{
           margin-right: 20px;
         }
+        button{
+          border: 1px solid #DBDBDB;
+          background: transparent;
+          padding: 6px 8px;
+          margin: 0 4px 0 4px;
+          font-weight: bold;
+
+        }
         a{
           font-weight: 600;
           padding: 0px;
@@ -679,6 +687,7 @@
     flex-direction: column;
     ul{
       overflow-y: scroll;
+      height: 375px;
       margin: 0;
       padding: 0;
       .message.mine {

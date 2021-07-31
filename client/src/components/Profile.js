@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import  {useSelector} from "react-redux";
 import { AddImageModal } from "./ModalsAndPopover/AddImageModal";
 import {useRouteMatch,NavLink, Link} from "react-router-dom";
@@ -35,6 +35,10 @@ export const Profile = () =>{
         }
     }
 
+    // useEffect(() => {
+    //     return {};
+    // },[])
+
     const handleClose = () => setShowModal(false);
 
     console.log(profile);
@@ -44,7 +48,7 @@ export const Profile = () =>{
             <div className="profile-info">
                 <div className="profile-image">
                     <img 
-                    src={profile.profilePic} 
+                    src={profile && profile.profilePic} 
                     alt="profile" 
                     onClick={()=> setShowModal(true)}
                     style={{objectFit:"cover"}}
@@ -53,24 +57,24 @@ export const Profile = () =>{
                 </div>
                 <div className="profile-user-info">
                     <div className="profile-username">
-                        <h2>{profile.username}</h2>
+                        <h2>{profile && profile.username}</h2>
                         <Link to={`/accounts/edit`}>Edit Profile</Link>
                     </div>
                     <div className="profile-followers">
                         <button >
-                            <span style={{fontWeight:"bold", marginRight:"5px"}}>{userPost.length}</span>
+                            <span style={{fontWeight:"bold", marginRight:"5px"}}>{userPost && userPost.length}</span>
                             <span style={{color:"#898989"}}>posts</span>
                         </button>
                         <button>
-                            <span style={{fontWeight:"bold", marginRight:"5px"}}>{profile.followers.length}</span>
+                            <span style={{fontWeight:"bold", marginRight:"5px"}}>{profile && profile.followers.length}</span>
                             <span style={{color:"#898989"}}>followers</span>
                         </button>
                         <button>
-                            <span style={{fontWeight:"bold", marginRight:"5px"}}>{profile.following.length}</span>
+                            <span style={{fontWeight:"bold", marginRight:"5px"}}>{profile && profile.following.length}</span>
                             <span style={{color:"#898989"}}>following</span>
                         </button>
                     </div>
-                    <div className="profile-fullName">{profile.fullName}</div>
+                    <div className="profile-fullName">{profile && profile.fullName}</div>
                 </div>
             </div>
             <div className="profile-item">

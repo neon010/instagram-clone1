@@ -25,6 +25,7 @@ router.patch('/upload-profile-pic', isLoggedIn,async (req, res) =>{
         const user = await User.findOne({_id:req.user._id})
         user.profilePic = req.body.image;
         await user.save();
+        console.log(user);
 
         res.status(200).send({status:"success", data: user});
     } catch (error) {
@@ -32,7 +33,7 @@ router.patch('/upload-profile-pic', isLoggedIn,async (req, res) =>{
     }
 })
 
-router.patch("/remove-profile-pic",isLoggedIn, async (req, res) => {
+router.patch("/remove-profile-pic", isLoggedIn, async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.user._id, {$unset: {profilePic: 1 }}, {new: true});
 
@@ -126,9 +127,14 @@ router.patch("/change-password",isLoggedIn,async (req, res)=>{
     }
 })
 
-router.get("/get-followers-followings", isLoggedIn, async (req, res) =>{
+router.get("/followers-followings", isLoggedIn, async (req, res) =>{
     try {
-        
+        console.log(req.query);
+        const {data, userId} = req.query;
+        const user = await User.findOne({_id:userId}).populate(data);
+
+        res.status(200).send({status:"success",data:user[data]});
+
     } catch (error) {
         res.status(500).send({status:"failed", message: error.message});
     }

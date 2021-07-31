@@ -21,14 +21,6 @@ export const  Navbar = () => {
 
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     if(socket.on){
-    //         socket.on('recieved notification', (data) =>{
-    //             console.log(data);
-    //     })
-    // }
-    // },[socket]);
-
 
       useEffect(() => {
         dispatch(fetchNotifications());

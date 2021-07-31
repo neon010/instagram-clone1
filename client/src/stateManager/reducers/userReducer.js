@@ -40,7 +40,7 @@ export const userReducer = (state = intialState, action) =>{
         }
         case FETCH_USER_UPDATE_PIC_SUCCESS: return {
             loading: false,
-            userDetails:action.payload,
+            userDetails:{user:action.payload, ...state.userDetails},
             isLogin: true,
             error: ""
         }
@@ -57,7 +57,7 @@ export const userReducer = (state = intialState, action) =>{
         }
         case FETCH_USER_REMOVE_PIC_SUCCESS: return {
             loading: false,
-            userDetails:action.payload,
+            userDetails:{user:action.payload, ...state.userDetails},
             isLogin: true,
             error: ""
         }

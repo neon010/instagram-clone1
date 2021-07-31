@@ -1,11 +1,14 @@
 import {useState, useEffect} from "react";
-import {useParams,useRouteMatch,NavLink} from "react-router-dom";
+import {useParams,useRouteMatch,NavLink, useHistory} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {BiGrid} from "react-icons/bi";
 import {BsHeart} from "react-icons/bs";
 import {BsFillPersonCheckFill} from "react-icons/bs";
 import {UserPost} from "../components/UserPost";
 import {fetchRefreshUser} from "../stateManager";
+import {fetchInbox} from "../stateManager";
+import { ShowFollowerModal } from "./ModalsAndPopover/ShowFollowerModal";
+
 
 
 export const UserProfile = () =>{
@@ -16,13 +19,19 @@ export const UserProfile = () =>{
     const userId = userDetails.user._id
     console.log(userId)
 
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState([]);
     const [userPost, setUserPost] = useState(null);
     const [likedPost, setLikedPost] = useState(null);
-    const [isFollowing, setIsFollowing] = useState(profile ? profile.followers.includes(userId) : false);
+    const [isFollowing, setIsFollowing] = useState(null);
+    const [showFollowerModal, setShowFollowerModal] = useState(false);
+    const [value, setValue] = useState(null);
     const [error, setError] = useState("");
 
     const socket = useSelector(state => state.Socket);
+
+    const history = useHistory();
+
+    // console.log(profile.followers.includes(userId))
 
 
     useEffect(()=>{
@@ -39,6 +48,12 @@ export const UserProfile = () =>{
             }
         })
      },[id])
+
+     useEffect(() => {
+         if(profile && profile.followers){
+            setIsFollowing(profile.followers.includes(userId))
+         }
+     }, [profile])
 
 
 
@@ -76,6 +91,31 @@ export const UserProfile = () =>{
             })
     }
 
+    const handlesendMessage = () =>{
+        const data = {selectedUser: [profile]}
+        fetch("/create-chat-room", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(result => {
+            if(result.status === "success"){
+                console.log(result);
+                history.push(`/direct/messages/${result.data._id}`)
+                dispatch(fetchInbox());
+            }
+        });
+    }
+
+    const handleShowFollowers = (event) => {
+        console.log(event.currentTarget.dataset.id)
+        setValue(event.currentTarget.dataset.id)
+        setShowFollowerModal(true)
+    }
+
     return (
         <div className="profile-container" id="profile-container">
             {profile && userPost && !error && <div className="profile-container" id="profile-container">
@@ -86,7 +126,7 @@ export const UserProfile = () =>{
                 <div className="profile-user-info">
                     <div className="profile-username">
                         <h2>{profile.username}</h2>
-                        <button>message</button>
+                        <button onClick={handlesendMessage}>message</button>
                         <button onClick={followUser}>
                             {isFollowing ? <BsFillPersonCheckFill/> : "Follow"}
                         </button>
@@ -96,11 +136,11 @@ export const UserProfile = () =>{
                             <span style={{fontWeight:"bold", marginRight:"5px"}}>{userPost.length}</span>
                             <span style={{color:"#898989"}}>posts</span>
                         </button>
-                        <button >
+                        <button onClick={handleShowFollowers} data-id="followers">
                             <span style={{fontWeight:"bold", marginRight:"5px"}}>{profile.followers.length}</span>
                             <span style={{color:"#898989"}}>followers</span>
                         </button>
-                        <button>
+                        <button onClick={handleShowFollowers} data-id="following">
                             <span style={{fontWeight:"bold", marginRight:"5px"}}>{profile.following.length}</span>
                             <span style={{color:"#898989"}}>following</span>
                         </button>
@@ -118,6 +158,12 @@ export const UserProfile = () =>{
                 </div>
             </div>
         </div>}
+        <ShowFollowerModal 
+        showFollowerModal={showFollowerModal} 
+        setShowFollowerModal={setShowFollowerModal}
+        value={value}
+        userId={profile && profile._id}
+        />
         </div>
     )
 }

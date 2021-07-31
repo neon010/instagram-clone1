@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post("/create-chat-room",isLoggedIn, async (req, res) => {
     try {
+        console.log(req.body);
         const {selectedUser} = req.body;
         console.log(selectedUser);
         if(!selectedUser) return res.status(400).send({status:"failed", message:"select users"});

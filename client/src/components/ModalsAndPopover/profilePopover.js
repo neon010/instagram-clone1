@@ -4,13 +4,13 @@ import {AiOutlineSetting} from "react-icons/ai";
 import {VscSave} from "react-icons/vsc";
 import {useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
-import {useState, useEffect, useRef} from "react"
+import {useState, useEffect} from "react";
 
 export const ProfilePopover = () => {
   const AuthResponse = useSelector(state => state.AuthResponse);
   const [showProfilePopover, setShowProfilePopover] = useState(false);
 
-  const myElem = useRef(null);
+
 
   const {userDetails} = AuthResponse;
   const {user} = userDetails
@@ -35,14 +35,13 @@ export const ProfilePopover = () => {
 
 
 
-  console.log(showProfilePopover)
 
   return (
         <div >
             <Popover
               isOpen={showProfilePopover}
               onClickOutside={() => setShowProfilePopover(false)}
-              positions={['bottom']} // preferred positions by priority
+              positions={['bottom']}
               padding={5}
               content={ <div id={`popover-positioned-bottom`}>
                   <div className="link-container" style={{display: 'flex', flexDirection: 'column'}} >
@@ -50,7 +49,7 @@ export const ProfilePopover = () => {
                     <CgProfile size={20} color="#262626"/>
                     <span>Profile</span>
                   </Link>
-                  <Link to="/savedPost">
+                  <Link to="/profile/saved">
                     <VscSave size={20} color="#262626"/>
                     <span>Saved</span>
                   </Link>
@@ -66,7 +65,7 @@ export const ProfilePopover = () => {
             }
             >
               <button onClick={() => setShowProfilePopover(!showProfilePopover)}>
-                <img src={user.profilePic} alt="profile user" width="30" height="30" style={{borderRadius:"50%"}}/>
+                <img src={user && user.profilePic} alt="profile user" width="30" height="30" style={{borderRadius:"50%"}}/>
               </button>
             </Popover>
         </div>
