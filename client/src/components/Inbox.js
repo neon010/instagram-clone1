@@ -5,7 +5,8 @@ import {Link, useRouteMatch} from "react-router-dom"
 import {fetchInbox} from "../stateManager"
 import { ChatRoom } from "./ChatRoom";
 import {CreateChatRoom} from "./ModalsAndPopover/CreateChatRoom";
-import {timeDifference} from "../utills/timeDifference"
+import {timeDifference} from "../utills/timeDifference";
+import {Helmet} from "react-helmet";
 
 export const Inbox = () =>{
     const [showModal, setShowModal] = useState(false);
@@ -32,6 +33,9 @@ export const Inbox = () =>{
 
     return (
         <div className="message-container">
+            <Helmet>
+                <title>Messages</title>
+            </Helmet>
             <div className="left-container">
                 <div style={{display: 'flex', borderBottom: '1px solid #dbdbdb'}}>
                     <h5 style={{marginLeft:"70px"}}>{loggedInUser && loggedInUser.fullName}</h5>

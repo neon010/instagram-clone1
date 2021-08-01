@@ -1,5 +1,6 @@
 import {useSelector} from "react-redux";
-import {useState, useEffect} from "react"
+import {useState, useEffect} from "react";
+import {Helmet} from "react-helmet"
 
 export const ChangePassword = () =>{
     const {userDetails} = useSelector(state => state.AuthResponse);
@@ -39,6 +40,9 @@ export const ChangePassword = () =>{
 
     return (
         <div className="edit-profile">
+            <Helmet>
+                <title>Change password</title>
+            </Helmet>
             <div className="top-profile-container">
                 <div className="image-container">
                     <div className="image-profile-div">

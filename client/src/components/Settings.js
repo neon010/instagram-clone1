@@ -1,6 +1,7 @@
 import {NavLink,useRouteMatch} from "react-router-dom";
 import {EditProfile} from "./EditProfile";
 import {ChangePassword} from "./ChangePassword";
+import {Helmet} from "react-helmet"
 
 export const Settings = () =>{
 
@@ -17,6 +18,9 @@ export const Settings = () =>{
     }
     return (
         <div className="settings">
+            <Helmet>
+                <title>Edit Profile</title>
+            </Helmet>
             <div className="left-container">
                 <NavLink to={`/accounts/edit/`}>Edit Profile</NavLink>
                 <NavLink to={`/accounts/edit/change-password`}>Change Password</NavLink>

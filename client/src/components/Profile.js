@@ -6,6 +6,7 @@ import {UserPost} from "../components/UserPost";
 import {BiGrid} from "react-icons/bi";
 import {BsHeart} from "react-icons/bs";
 import {BiSave} from "react-icons/bi";
+import {Helmet} from "react-helmet";
 
 export const Profile = () =>{
     const {userDetails} = useSelector(state => state.AuthResponse);
@@ -45,6 +46,9 @@ export const Profile = () =>{
 
     return (
         <div className="profile-container" id="profile-container">
+            <Helmet>
+                <title>{profile && profile.username}</title>
+            </Helmet>
             <div className="profile-info">
                 <div className="profile-image">
                     <img 

@@ -8,7 +8,7 @@ import {UserPost} from "../components/UserPost";
 import {fetchRefreshUser} from "../stateManager";
 import {fetchInbox} from "../stateManager";
 import { ShowFollowerModal } from "./ModalsAndPopover/ShowFollowerModal";
-
+import {Helmet} from "react-helmet";
 
 
 export const UserProfile = () =>{
@@ -118,6 +118,9 @@ export const UserProfile = () =>{
 
     return (
         <div className="profile-container" id="profile-container">
+            <Helmet>
+                <title>{profile && profile.username}</title>
+            </Helmet>
             {profile && userPost && !error && <div className="profile-container" id="profile-container">
             <div className="profile-info">
                 <div className="profile-image">

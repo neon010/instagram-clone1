@@ -4,6 +4,7 @@ import io from 'socket.io-client'
 import {useSelector, useDispatch} from "react-redux";
 import {fetchLoginUser} from "./stateManager";
 import {fetchSocket} from "./stateManager";
+import {Helmet} from "react-helmet";
 
 
 
@@ -14,6 +15,8 @@ function App() {
 
   const dispatch = useDispatch();
   const AuthResponse = useSelector(state => state.AuthResponse)
+
+
 
   const {loading, isLogin, error} = AuthResponse;
   
@@ -30,10 +33,13 @@ function App() {
 
 
   return (
-    <div>
-
-      {renderScreens(isLogin, loading, error)}
-    </div>
+      <div>
+          <Helmet>
+                <title>Instagram</title>
+                <link rel="icon" href="http://mysite.com/example" />
+          </Helmet>
+        {renderScreens(isLogin, loading, error)}
+      </div>
   );
 }
 

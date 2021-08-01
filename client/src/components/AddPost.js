@@ -1,10 +1,13 @@
 import {useState} from "react";
 import {useHistory} from "react-router-dom"
+import {Helmet} from "react-helmet";
 
 export const AddPost = () =>{
     const history = useHistory();
     const [title, setTitle] = useState("");
     const [files, setFile] = useState([]);
+
+
 
     const postToDB = async (url = '', data = {}) =>{
         const res = await fetch(url, {
@@ -25,7 +28,7 @@ export const AddPost = () =>{
         const uploadUrl = await Promise.all(Array.from(files).map(async file => {
             if(file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg"){
                 data.append("file", file);
-                const res = await fetch("https://api.cloudinary.com/v1_1/mycloud213/image/upload", {
+                const res = await fetch(process.env.REACT_APP_CLOUDINARY_IMAGE__URL, {
                             method: "POST",
                             body: data
                 });
@@ -33,7 +36,7 @@ export const AddPost = () =>{
                 return {type: "image", url: resJson.url}
             }else if(file.type === "video/mp4"){
                 data.append("file", file);
-                const res = await fetch("https://api.cloudinary.com/v1_1/mycloud213/video/upload", {
+                const res = await fetch(process.env.REACT_APP_CLOUDINARY_VIDEO__URL, {
                     method: "POST",
                     body: data
                 });
@@ -60,6 +63,9 @@ export const AddPost = () =>{
 
     return (
         <div className="add-post" >
+            <Helmet>
+                <title>Add Post</title>
+            </Helmet>
             <div style={{display: 'flex', justifyContent:"center", alignItems: 'center'}}>
                 <h3>Make a new post</h3>
             </div>

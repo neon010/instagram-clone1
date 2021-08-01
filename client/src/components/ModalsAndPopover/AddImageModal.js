@@ -36,7 +36,7 @@ export const AddImageModal = ({handleClose, showModal, setShowModal}) =>{
     const data = new FormData();
     data.append("upload_preset", "instagram-clone");
     data.append("file", file[0]);
-    const res = await fetch("https://api.cloudinary.com/v1_1/mycloud213/image/upload", {
+    const res = await fetch(process.env.REACT_APP_CLOUDINARY_IMAGE__URL, {
       method: "POST",
       body: data
     });

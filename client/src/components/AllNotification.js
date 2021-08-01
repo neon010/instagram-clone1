@@ -2,7 +2,8 @@ import {useSelector, useDispatch} from "react-redux";
 import {timeDifference} from "../utills/timeDifference"
 import {fetchNotificationsOpen} from "../stateManager";
 import {fetchDeleteAllNotification} from "../stateManager"
-import {useHistory} from "react-router-dom"
+import {useHistory} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 
 export const AllNotification = () =>{
@@ -25,6 +26,9 @@ export const AllNotification = () =>{
 
     return (
         <div style={{marginTop:"20px", backgroundColor:"#fff", minWidth: '450px', minHeight: '500px', border:"1px solid #dbdbdb"}}>
+            <Helmet>
+                <title>Notifications</title>
+            </Helmet>
             <div style={{marginTop:"10px", marginLeft:"10px", fontSize:"22px", fontWeight:"bold", display: 'flex', justifyContent: 'space-between'}}>
                 <p>Notifications</p>
                 <button style={{border:"none", backgroundColor:"transparent"}} onClick={handleDeleteAllNotifications}>Clear All</button>
