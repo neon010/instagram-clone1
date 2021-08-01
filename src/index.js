@@ -30,7 +30,7 @@ const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
     cors: {
-      origin: "http://localhost:5000",
+      origin: "https://myinstagram6589.herokuapp.com/",
       credentials: true
     }
 });
