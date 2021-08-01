@@ -103,7 +103,7 @@ io.on('connection', (socket) => {
     }
 })
 
-console.log(path.dirname(""))
+
 
 const PORT = process.env.PORT || 5000;
 
