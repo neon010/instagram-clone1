@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const http = require('http');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -101,6 +102,8 @@ io.on('connection', (socket) => {
 
     }
 })
+
+console.log(path.dirname(""))
 
 const PORT = process.env.PORT || 5000;
 
