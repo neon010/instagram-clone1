@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {fetchLoginUser} from "../stateManager"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import  {Link} from "react-router-dom"
 
 
 export const Login = () => {
@@ -95,7 +96,7 @@ export const Login = () => {
             <section className="lower-section">
                 <div>
                     <span style={{color: "#262626", fontSize:"14px"}}>Dont have an accounts?</span>
-                    <a href="/signup">Sign up</a>
+                    <Link to="/signup">Sign up</Link>
                 </div>
             </section>
             <ToastContainer autoClose={3000} />

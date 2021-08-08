@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {IoLogoFacebook} from "react-icons/io";
-import {useHistory} from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -115,7 +115,7 @@ export const Signup = () => {
             <section className="lower-section">
                 <div>
                     <span style={{color: "#262626", fontSize:"14px"}}>have an accounts?</span>
-                    <a href="/login">Log in</a>
+                    <Link to="/login">Log in</Link>
                 </div>
             </section>
             <ToastContainer autoClose={3000} />
