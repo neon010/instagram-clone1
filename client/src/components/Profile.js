@@ -83,9 +83,9 @@ export const Profile = () =>{
             </div>
             <div className="profile-item">
                 <div className="link-container">
-                        <NavLink to={`/profile/`}><BiGrid size={25}/> Post</NavLink>
-                        <NavLink to={`/profile/likes`}><BsHeart size={25}/> Likes</NavLink>
-                        <NavLink to={`/profile/saved`}><BiSave size={25}/> saved</NavLink>
+                        <NavLink exact to={`/profile/`}><BiGrid size={25}/> Post</NavLink>
+                        <NavLink exact to={`/profile/likes`}><BsHeart size={25}/> Likes</NavLink>
+                        <NavLink exact to={`/profile/saved`}><BiSave size={25}/> saved</NavLink>
                     </div>
                     <div>
                         { render(path)}

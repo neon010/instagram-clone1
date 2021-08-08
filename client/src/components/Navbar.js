@@ -46,9 +46,9 @@ export const  Navbar = () => {
             />
         </div>
         <div className="right-link-container">
-            <NavLink to="/" ><AiFillHome size={28}/></NavLink>
-            <NavLink to="/add-post"><BsPlusCircleFill size={28}/></NavLink>
-            <NavLink to="/direct/messages"><RiTelegramLine size={33}/></NavLink>
+            <NavLink exact to="/" ><AiFillHome size={28}/></NavLink>
+            <NavLink exact to="/add-post"><BsPlusCircleFill size={28}/></NavLink>
+            <NavLink exact to="/direct/messages"><RiTelegramLine size={33}/></NavLink>
             <Notification />
             <ProfilePopover/>
         </div>

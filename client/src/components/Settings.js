@@ -22,8 +22,8 @@ export const Settings = () =>{
                 <title>Edit Profile</title>
             </Helmet>
             <div className="left-container">
-                <NavLink to={`/accounts/edit/`}>Edit Profile</NavLink>
-                <NavLink to={`/accounts/edit/change-password`}>Change Password</NavLink>
+                <NavLink exact to={`/accounts/edit/`}>Edit Profile</NavLink>
+                <NavLink exact to={`/accounts/edit/change-password`}>Change Password</NavLink>
             </div>
             <div className="vertical-line"></div>
             <div className="right-container">{render(path)}</div>

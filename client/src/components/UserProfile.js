@@ -153,8 +153,8 @@ export const UserProfile = () =>{
             </div>
             <div className="profile-item">
                 <div className="link-container">
-                    <NavLink to={`/profile/${profile.username}/`}><BiGrid size={25}/> Post</NavLink>
-                    <NavLink to={`/profile/${profile.username}/likes`}><BsHeart size={25}/> Likes</NavLink>
+                    <NavLink exact to={`/profile/${profile.username}/`}><BiGrid size={25}/> Post</NavLink>
+                    <NavLink exact to={`/profile/${profile.username}/likes`}><BsHeart size={25}/> Likes</NavLink>
                 </div>
                 <div>
                     { render(path)}
